@@ -1,0 +1,4020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 YIYI & LELE — 送给田佳骏的生日礼物 🎂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink-light: #FFF0F3;
+            --pink-soft: #FFB6C1;
+            --pink-medium: #FF85A2;
+            --pink-dark: #FF6B8A;
+            --pink-deep: #E8507A;
+            --gold: #FFD700;
+            --gold-soft: #FFE4B5;
+            --white: #FFFFFF;
+            --text-dark: #4A2040;
+            --text-medium: #7A4A60;
+            --text-light: #B07090;
+            --shadow-pink: rgba(255, 107, 138, 0.3);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFE8EE 30%, #FFF0F5 60%, #FFF8F0 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ========== 飘落花瓣动画 ========== */
+        .petal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            top: -10%;
+            opacity: 0;
+            animation: petalFall linear infinite;
+        }
+
+        .petal svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes petalFall {
+            0% {
+                opacity: 0;
+                transform: translateY(-10%) rotate(0deg) translateX(0);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) translateX(50px);
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(110vh) rotate(360deg) translateX(-30px);
+            }
+        }
+
+        /* ========== 开场动画 ========== */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFE4EC, #FFD1DC, #FFC0CB);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .intro-overlay.hide {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .intro-heart {
+            width: 120px;
+            height: 120px;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .intro-text {
+            margin-top: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: var(--pink-deep);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .intro-hint {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+            60% { transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ========== 主内容 ========== */
+        .main-content {
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+        }
+
+        .main-content.show {
+            opacity: 1;
+        }
+
+        /* ========== 导航 ========== */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 240, 243, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(255, 133, 162, 0.15);
+        }
+
+        .nav-logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: var(--pink-deep);
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--pink-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pink-medium);
+            border-radius: 1px;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ========== Hero 区域 ========== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.3), transparent);
+            animation: floatBubble 6s ease-in-out infinite;
+        }
+
+        .hero-bg-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+        }
+
+        .hero-bg-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .hero-bg-circle:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            bottom: 10%;
+            left: 40%;
+            animation-delay: 4s;
+        }
+
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            animation: fadeInDown 1s ease forwards;
+            box-shadow: 0 4px 15px var(--shadow-pink);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(48px, 8vw, 90px);
+            color: var(--pink-deep);
+            line-height: 1.2;
+            margin-bottom: 10px;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+            text-shadow: 2px 2px 4px rgba(255, 133, 162, 0.2);
+        }
+
+        .hero-name {
+            font-size: clamp(28px, 5vw, 50px);
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: var(--text-medium);
+            max-width: 600px;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.9s forwards;
+            opacity: 0;
+        }
+
+        .hero-cake {
+            margin-top: 40px;
+            animation: fadeInUp 1s ease 1.2s forwards, bounce 2s ease-in-out infinite 2s;
+            opacity: 0;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-cake:active {
+            transform: scale(0.95);
+        }
+
+        .cake-emoji {
+            font-size: 80px;
+            display: block;
+            filter: drop-shadow(0 5px 15px rgba(255, 133, 162, 0.4));
+        }
+
+        .cake-sparkle {
+            position: absolute;
+            font-size: 20px;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        .cake-sparkle:nth-child(2) { top: -5px; left: 10px; animation-delay: 0.3s; }
+        .cake-sparkle:nth-child(3) { top: -10px; right: 15px; animation-delay: 0.6s; }
+        .cake-sparkle:nth-child(4) { top: 20px; left: -20px; animation-delay: 0.9s; }
+        .cake-sparkle:nth-child(5) { top: 20px; right: -20px; animation-delay: 1.2s; }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            animation: fadeInUp 1s ease 1.5s forwards, bounce 2s ease-in-out infinite;
+            opacity: 0;
+            color: var(--text-light);
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .scroll-arrow {
+            font-size: 20px;
+            animation: scrollDown 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollDown {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0.5; }
+        }
+
+        /* ========== 通用区块样式 ========== */
+        .section {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(32px, 5vw, 48px);
+            color: var(--pink-deep);
+            margin-bottom: 10px;
+        }
+
+        .section-desc {
+            font-size: 15px;
+            color: var(--text-medium);
+            line-height: 1.8;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink-medium), var(--gold));
+            border-radius: 2px;
+            margin: 15px auto;
+        }
+
+        /* ========== 我想对你说（弹幕区） ========== */
+        .barrage-section {
+            background: linear-gradient(180deg, rgba(255, 240, 243, 0.5), rgba(255, 228, 235, 0.5));
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .barrage-stage {
+            max-width: 1000px;
+            margin: 0 auto 30px;
+            height: 350px;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 30px rgba(255, 133, 162, 0.12);
+            border: 2px dashed var(--pink-soft);
+            padding: 20px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .barrage-stage::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .barrage-stage::-webkit-scrollbar-track {
+            background: rgba(255, 182, 193, 0.15);
+            border-radius: 4px;
+        }
+
+        .barrage-stage::-webkit-scrollbar-thumb {
+            background: var(--pink-soft);
+            border-radius: 4px;
+        }
+
+        .barrage-stage::-webkit-scrollbar-thumb:hover {
+            background: var(--pink-medium);
+        }
+
+        .barrage-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .barrage-empty {
+            text-align: center;
+            color: var(--text-light);
+            padding: 60px 20px;
+            font-size: 14px;
+        }
+
+        .barrage-item {
+            position: relative;
+            white-space: normal;
+            padding: 12px 20px;
+            border-radius: 18px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            animation: barrageFadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes barrageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .barrage-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .barrage-text {
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .barrage-meta {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .barrage-date {
+            opacity: 0.85;
+        }
+
+        .barrage-controls {
+            max-width: 600px;
+            margin: 30px auto 0;
+            text-align: center;
+        }
+
+        .barrage-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .barrage-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--pink-soft);
+            border-radius: 50px;
+            font-size: 14px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: white;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .barrage-input:focus {
+            border-color: var(--pink-medium);
+            box-shadow: 0 0 0 3px rgba(255, 133, 162, 0.2);
+        }
+
+        .barrage-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .barrage-select {
+            padding: 12px 16px;
+            border: 2px solid var(--pink-soft);
+            border-radius: 50px;
+            font-size: 14px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: white;
+            color: var(--text-dark);
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FF85A2' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .barrage-select:focus {
+            border-color: var(--pink-medium);
+            box-shadow: 0 0 0 3px rgba(255, 133, 162, 0.2);
+        }
+
+        .btn-primary {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', sans-serif;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px var(--shadow-pink);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-pink);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .barrage-presets {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .preset-tag {
+            padding: 6px 16px;
+            background: rgba(255, 182, 193, 0.2);
+            border: 1px solid var(--pink-soft);
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .preset-tag:hover {
+            background: var(--pink-medium);
+            color: white;
+            border-color: var(--pink-medium);
+            transform: translateY(-2px);
+        }
+
+        /* ========== 弹幕详情弹窗 ========== */
+        .barrage-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(74, 32, 64, 0.4);
+            backdrop-filter: blur(5px);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .barrage-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .barrage-modal {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.3s;
+            box-shadow: 0 20px 60px rgba(255, 107, 138, 0.2);
+        }
+
+        .barrage-modal-overlay.active .barrage-modal {
+            transform: scale(1);
+        }
+
+        .modal-heart {
+            font-size: 50px;
+            margin-bottom: 15px;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .modal-message {
+            font-size: 20px;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: var(--pink-light);
+            border-radius: 16px;
+        }
+
+        .modal-from {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            padding: 10px 30px;
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== 媒体查看器（点开查看大图/视频） ========== */
+        .media-viewer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10020;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .media-viewer-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .media-viewer-content {
+            max-width: 90%;
+            max-height: 85vh;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+        .media-viewer-overlay.active .media-viewer-content {
+            transform: scale(1);
+        }
+        .media-viewer-content img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .media-viewer-content video {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .media-viewer-close {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .media-viewer-close:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        .media-viewer-caption {
+            margin-top: 12px;
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            font-family: 'Noto Sans SC', sans-serif;
+            text-align: center;
+            max-width: 90vw;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        /* ========== 幸福瞬间（时光轴） ========== */
+        .timeline-section {
+            background: rgba(255, 248, 250, 0.5);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--pink-soft), var(--gold-soft), var(--pink-soft));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px 40px;
+            opacity: 0;
+            animation: fadeInSide 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            animation-name: fadeInLeft;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+            animation-name: fadeInRight;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--pink-medium);
+            border-radius: 50%;
+            top: 30px;
+            box-shadow: 0 0 0 4px white, 0 0 0 6px var(--pink-soft);
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        .timeline-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(255, 133, 162, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 133, 162, 0.2);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            color: var(--pink-dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        .timeline-photo {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-top: 12px;
+            background: var(--pink-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--text-light);
+            overflow: hidden;
+        }
+
+        .timeline-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInSide {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ========== 图片视频上传区 ========== */
+        .upload-section {
+            background: linear-gradient(180deg, rgba(255, 240, 243, 0.3), rgba(255, 245, 248, 0.6));
+        }
+
+        .upload-area {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .upload-card {
+            aspect-ratio: 1;
+            border: 2px dashed var(--pink-soft);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-card:hover {
+            border-color: var(--pink-medium);
+            background: rgba(255, 182, 193, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 133, 162, 0.15);
+        }
+
+        .upload-card input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        .upload-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .uploaded-card {
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(255, 133, 162, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .uploaded-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .uploaded-card img,
+        .uploaded-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .uploaded-card .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.4);
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .uploaded-card:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .uploaded-card .video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* ========== 生日倒计时 / 祝福 ========== */
+        .wish-section {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, rgba(255, 245, 248, 0.5), rgba(255, 240, 243, 0.8));
+        }
+
+        .wish-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 15px 50px rgba(255, 133, 162, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wish-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 182, 193, 0.1), transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: rotateBg 10s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .wish-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .wish-emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .wish-main {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(28px, 5vw, 40px);
+            color: var(--pink-deep);
+            margin-bottom: 15px;
+        }
+
+        .wish-detail {
+            font-size: 16px;
+            color: var(--text-medium);
+            line-height: 2;
+        }
+
+        .wish-signature {
+            margin-top: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: var(--pink-medium);
+        }
+
+        /* ========== 底部 ========== */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 228, 235, 0.3);
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .footer-hearts {
+            font-size: 20px;
+            margin-bottom: 10px;
+            letter-spacing: 8px;
+        }
+
+        /* ========== 音符装饰 ========== */
+        .music-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-pink);
+            z-index: 1000;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* ========== Toast 提示 ========== */
+        .toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: white;
+            color: var(--text-dark);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 9000;
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 12px; }
+
+            .timeline::before { left: 20px; }
+            .timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding: 20px 20px 20px 50px; }
+            .timeline-item .timeline-dot { left: 12px !important; right: auto !important; }
+
+            .barrage-stage { height: 250px; }
+
+            .upload-area { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+
+            .wish-card { padding: 40px 25px; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links { display: none; }
+            .barrage-input-group { flex-direction: column; }
+        }
+
+        /* ========== 回到顶部 ========== */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            color: var(--pink-medium);
+            border: 2px solid var(--pink-soft);
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 133, 162, 0.15);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--pink-medium);
+            color: white;
+            border-color: var(--pink-medium);
+        }
+
+        /* ========== 烟花效果 ========== */
+        .firework {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: fireworkBurst 1s ease-out forwards;
+        }
+
+        @keyframes fireworkBurst {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+        }
+
+        /* ========== 蛋糕蜡烛许愿场景 ========== */
+        .cake-scene-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #FFE4EC, #FFD1DC, #FFC0CB);
+            transition: background 0.8s ease;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .cake-scene-overlay.active {
+            display: flex;
+        }
+
+        .cake-scene-overlay.dimmed {
+            background: radial-gradient(circle at center, rgba(30,8,20,0.82), rgba(0,0,0,0.97));
+        }
+
+        .cake-scene-hint {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(22px, 4vw, 30px);
+            color: var(--pink-deep);
+            margin-bottom: 28px;
+            animation: fadeInUp 0.8s ease;
+            transition: opacity 0.4s;
+        }
+
+        .cake-scene-overlay.dimmed .cake-scene-hint {
+            color: #FFD9E5;
+            text-shadow: 0 0 16px rgba(255, 180, 130, 0.7);
+        }
+
+        /* 大蛋糕 */
+        .birthday-cake {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            animation: cakeBounceIn 0.8s ease forwards;
+            filter: drop-shadow(0 16px 24px rgba(255, 107, 138, 0.28));
+        }
+
+        @keyframes cakeBounceIn {
+            0% { opacity: 0; transform: scale(0.5) translateY(40px); }
+            60% { transform: scale(1.05) translateY(-8px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* 蛋糕托盘 */
+        .cake-plate {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 26px;
+            background: linear-gradient(180deg, #FFFFFF, #DCDCDC 55%, #B0B0B0);
+            border-radius: 50%;
+            box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+        }
+        .cake-plate::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 12%;
+            right: 12%;
+            height: 5px;
+            background: rgba(255,255,255,0.75);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+
+        .cake-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: inset 0 -8px 16px rgba(0,0,0,0.08), inset 0 4px 8px rgba(255,255,255,0.4);
+        }
+
+        /* 顶部奶油层 */
+        .cake-layer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 18px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.25));
+            border-radius: 14px 14px 0 0;
+        }
+
+        /* 糖霜滴落 */
+        .cake-layer::before {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: -2px;
+            right: -2px;
+            height: 26px;
+            background:
+                radial-gradient(circle at 12% 0, #fff 0 10px, transparent 11px),
+                radial-gradient(circle at 32% 0, #fff 0 14px, transparent 15px),
+                radial-gradient(circle at 54% 0, #fff 0 9px, transparent 10px),
+                radial-gradient(circle at 74% 0, #fff 0 13px, transparent 14px),
+                radial-gradient(circle at 92% 0, #fff 0 10px, transparent 11px);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .cake-bottom {
+            width: 230px;
+            height: 82px;
+            bottom: 12px;
+            background: linear-gradient(180deg, #FF9FB6 0%, #FF6B8A 60%, #E8507A 100%);
+        }
+
+        .cake-middle {
+            width: 182px;
+            height: 68px;
+            bottom: 86px;
+            background: linear-gradient(180deg, #FFC2D4 0%, #FFA6BE 60%, #FF8FAB 100%);
+        }
+
+        .cake-top {
+            width: 134px;
+            height: 58px;
+            bottom: 148px;
+            background: linear-gradient(180deg, #FFE0EA 0%, #FFCCDB 60%, #FFBDD0 100%);
+        }
+
+        /* 装饰彩珠 */
+        .cake-deco {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 2;
+        }
+        .cake-deco span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+        .deco-bottom { bottom: 30px; width: 200px; }
+        .deco-middle { bottom: 104px; width: 156px; }
+        .deco-top { bottom: 166px; width: 110px; }
+
+        /* 顶部樱桃 */
+        .cake-cherries {
+            position: absolute;
+            bottom: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 26px;
+            z-index: 2;
+        }
+        .cherry {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #FF6B6B, #C92A2A 65%, #A01818 100%);
+            box-shadow: 0 2px 5px rgba(140,20,20,0.35), inset 0 -2px 3px rgba(80,0,0,0.2);
+            position: relative;
+        }
+        .cherry::before {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%) rotate(8deg);
+            width: 2px;
+            height: 8px;
+            background: linear-gradient(180deg, #8B6914, #5A4010);
+            border-radius: 1px;
+        }
+        .cherry::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 5px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.85), rgba(255,200,200,0.3));
+        }
+
+        /* 蜡烛 */
+        .cake-candles {
+            position: absolute;
+            bottom: 206px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 4;
+        }
+
+        .candle {
+            position: relative;
+            width: 11px;
+            height: 50px;
+            border-radius: 3px 3px 2px 2px;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,0.22), transparent 25%, transparent 75%, rgba(0,0,0,0.22)),
+                repeating-linear-gradient(135deg, #FF6B8A 0 5px, #FFFFFF 5px 10px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.18), inset 0 -3px 6px rgba(0,0,0,0.12);
+        }
+
+        /* 蜡烛芯 */
+        .candle::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 7px;
+            background: #3D2817;
+            border-radius: 1px;
+        }
+
+        /* 蜡烛顶部蜡油滴落 */
+        .candle::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -1px;
+            right: -1px;
+            height: 10px;
+            background:
+                radial-gradient(circle at 20% 100%, #FFF 0 4px, transparent 5px),
+                radial-gradient(circle at 50% 100%, #FFF 0 5px, transparent 6px),
+                radial-gradient(circle at 80% 100%, #FFF 0 4px, transparent 5px);
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
+
+        /* 火焰外层光晕 */
+        .flame-glow {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,180,60,0.55), rgba(255,140,0,0.2) 55%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .candle.lit .flame-glow { opacity: 1; animation: glowPulse 1.2s ease-in-out infinite; }
+        @keyframes glowPulse {
+            0%,100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+        }
+
+        .flame {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 26px;
+            background: radial-gradient(ellipse at 50% 78%, #FFFDE7 0%, #FFE066 22%, #FFB300 50%, #FF6F00 80%, #E65100 100%);
+            border-radius: 50% 50% 50% 50% / 72% 72% 32% 32%;
+            opacity: 0;
+            transform-origin: 50% 90%;
+            box-shadow:
+                0 0 12px 3px rgba(255,170,0,0.6),
+                0 0 28px 8px rgba(255,140,0,0.32),
+                0 0 50px 14px rgba(255,100,0,0.15);
+            transition: opacity 0.3s;
+        }
+        /* 火焰蓝色根部 */
+        .flame::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 8px;
+            background: radial-gradient(ellipse at 50% 80%, #80D8FF, #29B6F6 70%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.85;
+        }
+        /* 火焰内层白热核心 */
+        .flame::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 14px;
+            background: radial-gradient(ellipse at 50% 70%, #FFFFFF 0%, #FFF9C4 40%, rgba(255,235,59,0.5) 80%, transparent 100%);
+            border-radius: 50% 50% 50% 50% / 70% 70% 35% 35%;
+            opacity: 0.9;
+        }
+
+        .candle.lit .flame {
+            opacity: 1;
+            animation: flameFlicker 0.22s ease-in-out infinite alternate;
+        }
+
+        @keyframes flameFlicker {
+            0% { transform: translateX(-50%) scaleY(1) scaleX(1) rotate(-3deg); }
+            100% { transform: translateX(-50%) scaleY(1.16) scaleX(0.88) rotate(3deg); }
+        }
+
+        /* 吹灭后的烟雾 */
+        .candle.smoke::after {
+            content: '';
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: rgba(200,200,200,0.6);
+            border-radius: 50%;
+            animation: smokeRise 1.2s ease-out forwards;
+        }
+
+        @keyframes smokeRise {
+            0% { opacity: 0.7; transform: translateX(-50%) translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(2.5); }
+        }
+
+        /* 蛋糕周围闪烁星星 */
+        .cake-sparkles {
+            position: absolute;
+            inset: -40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .cake-sparkles span {
+            position: absolute;
+            font-size: 14px;
+            animation: sparkleFloat 2.5s ease-in-out infinite;
+            opacity: 0;
+        }
+        .cake-sparkles span:nth-child(1) { top: 5%; left: 8%; animation-delay: 0s; font-size: 16px; }
+        .cake-sparkles span:nth-child(2) { top: 12%; right: 10%; animation-delay: 0.5s; font-size: 12px; }
+        .cake-sparkles span:nth-child(3) { top: 30%; left: 2%; animation-delay: 1s; font-size: 18px; }
+        .cake-sparkles span:nth-child(4) { top: 45%; right: 4%; animation-delay: 1.5s; font-size: 14px; }
+        .cake-sparkles span:nth-child(5) { bottom: 15%; left: 6%; animation-delay: 0.3s; font-size: 15px; }
+        .cake-sparkles span:nth-child(6) { bottom: 25%; right: 8%; animation-delay: 0.8s; font-size: 13px; }
+        .cake-sparkles span:nth-child(7) { top: 20%; left: 50%; animation-delay: 1.2s; font-size: 16px; }
+        .cake-sparkles span:nth-child(8) { bottom: 5%; left: 40%; animation-delay: 1.8s; font-size: 12px; }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0; transform: translateY(0) scale(0.6); }
+            50% { opacity: 1; transform: translateY(-10px) scale(1.1); }
+        }
+
+        /* 蛋糕底盘阴影 */
+        .cake-shadow {
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 20px;
+            background: radial-gradient(ellipse, rgba(255,107,138,0.25), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        /* 场景按钮 */
+        .cake-scene-buttons {
+            margin-top: 38px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cake-btn {
+            padding: 13px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', sans-serif;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cake-btn-primary {
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            box-shadow: 0 4px 16px var(--shadow-pink);
+        }
+
+        .cake-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px var(--shadow-pink);
+        }
+
+        .cake-btn-skip {
+            background: rgba(255,255,255,0.9);
+            color: var(--text-medium);
+            border: 1px solid var(--pink-soft);
+        }
+
+        .cake-btn-skip:hover {
+            background: var(--pink-light);
+            transform: translateY(-2px);
+        }
+
+        /* 许愿输入框 */
+        .wish-input-modal {
+            position: fixed;
+            z-index: 10002;
+            background: white;
+            border-radius: 26px;
+            padding: 38px 32px;
+            max-width: 420px;
+            width: 86%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .wish-input-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .wish-input-icon {
+            font-size: 44px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .wish-input-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 26px;
+            color: var(--pink-deep);
+        }
+
+        .wish-input-desc {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: -8px;
+        }
+
+        .wish-input-field {
+            width: 100%;
+            padding: 13px 18px;
+            border: 2px solid var(--pink-soft);
+            border-radius: 16px;
+            font-size: 15px;
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .wish-input-field:focus {
+            border-color: var(--pink-medium);
+            box-shadow: 0 0 0 3px rgba(255,133,162,0.2);
+        }
+
+        .wish-input-date {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* 庆祝层 */
+        .celebration-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10003;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, rgba(255,228,235,0.96), rgba(255,200,220,0.92));
+            cursor: pointer;
+        }
+
+        .celebration-overlay.active {
+            display: flex;
+        }
+
+        .confetti-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            top: -20px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-30px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(108vh) rotate(720deg); opacity: 0.5; }
+        }
+
+        .celebration-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .celebration-emoji {
+            font-size: 60px;
+            margin-bottom: 16px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .celebration-main {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(30px, 7vw, 58px);
+            color: var(--pink-deep);
+            line-height: 1.3;
+            text-shadow: 2px 2px 8px rgba(255,107,138,0.3);
+            animation: celebPop 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .celebration-sub {
+            margin-top: 20px;
+            font-size: clamp(14px, 2.6vw, 18px);
+            color: var(--text-medium);
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+            opacity: 0;
+        }
+
+        .celebration-hint {
+            margin-top: 30px;
+            font-size: 13px;
+            color: var(--text-light);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes celebPop {
+            0% { opacity: 0; transform: scale(0.3); }
+            60% { transform: scale(1.15); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* 重新许愿按钮 */
+        .rewish-btn {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), #FFA500);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255,165,0,0.45);
+            z-index: 1000;
+            transition: transform 0.3s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rewish-btn.show {
+            display: flex;
+        }
+
+        .rewish-btn:hover {
+            transform: scale(1.1) rotate(12deg);
+        }
+
+        /* ========== 许愿表单（3个愿望） ========== */
+        .wish-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .wish-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .wish-row .wish-input-field {
+            flex: 1;
+            text-align: left;
+            padding: 11px 16px;
+            font-size: 14px;
+        }
+        .wish-lock-btn {
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 2px solid var(--pink-soft);
+            background: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wish-lock-btn:hover { border-color: var(--pink-medium); }
+        .wish-lock-btn.locked {
+            background: var(--pink-light);
+            border-color: var(--pink-medium);
+        }
+        .wish-sender-row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .wish-sender-btn {
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 2px solid var(--pink-soft);
+            background: white;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 14px;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .wish-sender-btn.active {
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            border-color: transparent;
+        }
+        .wish-lock-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: -4px;
+        }
+        .wish-input-modal {
+            max-width: 460px;
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+
+        /* ========== 主页愿望展示 ========== */
+        .hero-wishes {
+            max-width: 680px;
+            margin: 36px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+        .hero-wishes-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 22px;
+            color: var(--pink-deep);
+            margin-bottom: 4px;
+        }
+        .wish-card-display {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,0.78);
+            border: 1px solid rgba(255,182,193,0.5);
+            border-radius: 18px;
+            padding: 14px 18px;
+            box-shadow: 0 4px 16px rgba(255,133,162,0.12);
+            text-align: left;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        .wish-card-display:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(255,133,162,0.2);
+        }
+        .wish-card-icon {
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        .wish-card-body { flex: 1; min-width: 0; }
+        .wish-card-text {
+            font-size: 15px;
+            color: var(--text-dark);
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .wish-card-meta {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        .wish-card-locked {
+            cursor: pointer;
+        }
+        .wish-card-locked .wish-card-text {
+            color: var(--text-light);
+            font-style: italic;
+        }
+        .wish-empty-hint {
+            color: var(--text-light);
+            font-size: 14px;
+            text-align: center;
+            padding: 16px;
+        }
+
+        /* ========== 通用密码弹窗 ========== */
+        .pwd-modal {
+            position: fixed;
+            z-index: 10010;
+            background: white;
+            border-radius: 24px;
+            padding: 32px 28px;
+            max-width: 380px;
+            width: 86%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            opacity: 0;
+            transition: all 0.35s ease;
+        }
+        .pwd-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .pwd-modal-icon { font-size: 40px; }
+        .pwd-modal-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: var(--pink-deep);
+        }
+        .pwd-modal-desc {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: -8px;
+        }
+        .pwd-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--pink-soft);
+            border-radius: 14px;
+            font-size: 18px;
+            letter-spacing: 6px;
+            text-align: center;
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .pwd-input:focus {
+            border-color: var(--pink-medium);
+            box-shadow: 0 0 0 3px rgba(255,133,162,0.2);
+        }
+        .pwd-modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .pwd-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .pwd-tab {
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--pink-soft);
+            background: white;
+            font-size: 13px;
+            cursor: pointer;
+            color: var(--text-medium);
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: all 0.3s;
+        }
+        .pwd-tab.active {
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            border-color: transparent;
+        }
+        .pwd-status {
+            font-size: 12px;
+            color: var(--text-light);
+            min-height: 16px;
+        }
+
+        /* ========== 密码管理弹窗（含邮箱绑定） ========== */
+        .pwd-manage-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10011;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .pwd-manage-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .pwd-manage-modal {
+            background: white;
+            border-radius: 24px;
+            padding: 30px 26px;
+            max-width: 380px;
+            width: 86%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transform: scale(0.85);
+            transition: transform 0.35s ease;
+        }
+        .pwd-manage-overlay.active .pwd-manage-modal {
+            transform: scale(1);
+        }
+        .pm-icon { font-size: 38px; }
+        .pm-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: var(--pink-deep);
+        }
+        .pm-status-row {
+            font-size: 13px;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+        .pm-status-row strong {
+            color: var(--pink-dark);
+        }
+        .pm-section {
+            width: 100%;
+            background: rgba(255,240,243,0.5);
+            border-radius: 16px;
+            padding: 16px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .pm-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .pm-hint {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: -4px;
+        }
+        .pm-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--pink-soft);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .pm-input:focus {
+            border-color: var(--pink-medium);
+            box-shadow: 0 0 0 3px rgba(255,133,162,0.2);
+        }
+        .pm-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-dark));
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', sans-serif;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .pm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255,107,138,0.35);
+        }
+        .pm-link {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .pm-link:hover {
+            color: var(--pink-medium);
+        }
+        .pm-status {
+            font-size: 12px;
+            color: #E74C3C;
+            min-height: 16px;
+        }
+        .pm-close-btn {
+            margin-top: 4px;
+        }
+
+        /* ========== 确认弹窗 ========== */
+        .confirm-modal {
+            position: fixed;
+            z-index: 10012;
+            background: white;
+            border-radius: 22px;
+            padding: 28px 26px;
+            max-width: 340px;
+            width: 84%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .confirm-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .confirm-icon { font-size: 38px; }
+        .confirm-title { font-size: 17px; font-weight: 600; color: var(--text-dark); }
+        .confirm-desc { font-size: 13px; color: var(--text-light); margin-top: -8px; }
+        .confirm-buttons { display: flex; gap: 12px; margin-top: 4px; }
+        .btn-cancel {
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: 1px solid var(--pink-soft);
+            background: white;
+            color: var(--text-medium);
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: all 0.3s;
+        }
+        .btn-cancel:hover { background: var(--pink-light); }
+        .btn-danger {
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, #FF7A9C, #E8507A);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            box-shadow: 0 4px 14px rgba(232,80,122,0.35);
+            transition: transform 0.3s;
+        }
+        .btn-danger:hover { transform: translateY(-2px); }
+
+        /* ========== 修改密码按钮（左上角） ========== */
+        .pwd-manage-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.85);
+            border: 1px solid var(--pink-soft);
+            color: var(--pink-deep);
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: all 0.3s;
+            margin-left: 12px;
+        }
+        .pwd-manage-btn:hover {
+            background: var(--pink-medium);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* ========== 幸福瞬间：多图画廊 + 可编辑文字 ========== */
+        .timeline-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            background: rgba(255,255,255,0.85);
+        }
+        .gallery-item .gal-media {
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-item .gal-media img, .gallery-item .gal-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-item .gal-date {
+            font-size: 9px;
+            color: var(--text-light);
+            text-align: center;
+            padding: 3px 4px 1px;
+        }
+        .gallery-item .gal-caption {
+            width: 100%;
+            border: none;
+            border-top: 1px solid rgba(255,182,193,0.3);
+            padding: 4px 6px;
+            font-size: 10px;
+            color: var(--text-medium);
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .gallery-item .gal-caption:focus {
+            border-top-color: var(--pink-medium);
+            background: rgba(255,240,243,0.5);
+        }
+        .gallery-item .gal-delete {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 5;
+        }
+        .gallery-item:hover .gal-delete { opacity: 1; }
+        .gallery-add {
+            aspect-ratio: 1;
+            border: 2px dashed var(--pink-soft);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 22px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .gallery-add:hover {
+            border-color: var(--pink-medium);
+            background: rgba(255,182,193,0.12);
+            color: var(--pink-medium);
+        }
+        .gallery-add input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .timeline-caption {
+            margin-top: 10px;
+            width: 100%;
+            border: 1px solid rgba(255,182,193,0.5);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--text-medium);
+            font-family: 'Noto Sans SC', sans-serif;
+            background: rgba(255,255,255,0.7);
+            outline: none;
+            resize: vertical;
+            min-height: 38px;
+            transition: border-color 0.3s;
+        }
+        .timeline-caption:focus { border-color: var(--pink-medium); }
+        .timeline-stamp {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 6px;
+        }
+
+        /* ========== 上传回忆：日期 + 可编辑文字 ========== */
+        .uploaded-card {
+            flex-direction: column;
+            padding: 8px;
+            aspect-ratio: auto;
+        }
+        .upload-media-wrap {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+        .upload-media-wrap img, .upload-media-wrap video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .upload-caption {
+            width: 100%;
+            margin-top: 8px;
+            border: 1px solid rgba(255,182,193,0.5);
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 12px;
+            color: var(--text-medium);
+            font-family: 'Noto Sans SC', sans-serif;
+            background: rgba(255,255,255,0.8);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .upload-caption:focus { border-color: var(--pink-medium); }
+        .upload-date {
+            font-size: 10px;
+            color: var(--text-light);
+            margin-top: 4px;
+            text-align: center;
+        }
+        .uploaded-card .delete-btn {
+            top: 12px;
+            right: 12px;
+            z-index: 3;
+        }
+
+        /* ========== 展开/收起模式 ========== */
+        .expand-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 10px 16px;
+            border: 2px dashed var(--pink-soft);
+            border-radius: 12px;
+            background: rgba(255,250,251,0.8);
+            color: var(--pink-medium);
+            font-size: 14px;
+            font-family: 'Noto Sans SC', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .expand-toggle:hover {
+            border-color: var(--pink-medium);
+            background: rgba(255,240,243,0.6);
+        }
+        .expand-toggle .toggle-arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+            font-size: 12px;
+        }
+        .expand-toggle.expanded .toggle-arrow {
+            transform: rotate(180deg);
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .collapsible-content.expanded {
+            max-height: 5000px;
+        }
+        .upload-display-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+            padding-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 飘落花瓣 -->
+    <div class="petal-container" id="petalContainer"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 开场动画 -->
+    <div class="intro-overlay" id="introOverlay" onclick="enterPage()">
+        <svg class="intro-heart" viewBox="0 0 100 100">
+            <path d="M50 88 C25 65, 0 50, 0 30 C0 12, 15 0, 30 0 C40 0, 48 6, 50 15 C52 6, 60 0, 70 0 C85 0, 100 12, 100 30 C100 50, 75 65, 50 88Z" fill="#FF6B8A"/>
+        </svg>
+        <div class="intro-text">YIYI & LELE</div>
+        <div class="intro-hint">✨ 点击任意位置，打开这份特别的礼物 ✨</div>
+    </div>
+
+    <!-- 蛋糕蜡烛许愿场景 -->
+    <div class="cake-scene-overlay" id="cakeSceneOverlay" onclick="handleCakeSceneClick(event)">
+        <div class="cake-scene-hint" id="cakeSceneHint">点亮蜡烛，许下心愿吧 🕯️</div>
+        <div class="birthday-cake">
+            <div class="cake-sparkles">
+                <span>✨</span><span>⭐</span><span>✨</span><span>🌟</span>
+                <span>✨</span><span>💫</span><span>⭐</span><span>✨</span>
+            </div>
+            <div class="cake-shadow"></div>
+            <div class="cake-candles">
+                <div class="candle"><div class="flame-glow"></div><div class="flame"></div></div>
+                <div class="candle"><div class="flame-glow"></div><div class="flame"></div></div>
+                <div class="candle"><div class="flame-glow"></div><div class="flame"></div></div>
+                <div class="candle"><div class="flame-glow"></div><div class="flame"></div></div>
+                <div class="candle"><div class="flame-glow"></div><div class="flame"></div></div>
+            </div>
+            <div class="cake-cherries"><div class="cherry"></div><div class="cherry"></div><div class="cherry"></div></div>
+            <div class="cake-layer cake-top"></div>
+            <div class="cake-deco deco-top"><span style="background:#FFD700"></span><span style="background:#FF6B8A"></span><span style="background:#87CEEB"></span><span style="background:#98FB98"></span><span style="background:#DDA0DD"></span></div>
+            <div class="cake-layer cake-middle"></div>
+            <div class="cake-deco deco-middle"><span style="background:#FF6B8A"></span><span style="background:#FFD700"></span><span style="background:#98FB98"></span><span style="background:#87CEEB"></span><span style="background:#DDA0DD"></span><span style="background:#FF8A8A"></span></div>
+            <div class="cake-layer cake-bottom"></div>
+            <div class="cake-deco deco-bottom"><span style="background:#FFD700"></span><span style="background:#87CEEB"></span><span style="background:#FF6B8A"></span><span style="background:#98FB98"></span><span style="background:#DDA0DD"></span><span style="background:#FF8A8A"></span><span style="background:#FFD700"></span></div>
+            <div class="cake-plate"></div>
+        </div>
+        <div class="cake-scene-buttons" id="cakeSceneButtons">
+            <button class="cake-btn cake-btn-primary" onclick="lightCandles(event)">🕯️ 点燃蜡烛许愿</button>
+            <button class="cake-btn cake-btn-skip" onclick="skipWish(event)">⏭️ 跳过</button>
+        </div>
+    </div>
+
+    <!-- 许愿输入框（3个愿望） -->
+    <div class="wish-input-modal" id="wishInputModal" onclick="event.stopPropagation()">
+        <div class="wish-input-icon">🕯️</div>
+        <div class="wish-input-title">许下三个心愿</div>
+        <div class="wish-input-desc">写下你的生日愿望，自动附上今天的日期 · 点 🔒 可隐藏愿望</div>
+        <div class="wish-sender-row">
+            <button class="wish-sender-btn active" data-sender="YIYI" onclick="selectWishSender('YIYI')">💕 YIYI</button>
+        </div>
+        <div class="wish-form" id="wishForm">
+            <div class="wish-row">
+                <input type="text" class="wish-input-field wish-field" placeholder="愿望 1..." maxlength="60">
+                <button class="wish-lock-btn" data-idx="0" onclick="toggleWishLock(0)" title="公开/隐藏">🔓</button>
+            </div>
+            <div class="wish-row">
+                <input type="text" class="wish-input-field wish-field" placeholder="愿望 2..." maxlength="60">
+                <button class="wish-lock-btn" data-idx="1" onclick="toggleWishLock(1)" title="公开/隐藏">🔓</button>
+            </div>
+            <div class="wish-row">
+                <input type="text" class="wish-input-field wish-field" placeholder="愿望 3..." maxlength="60">
+                <button class="wish-lock-btn" data-idx="2" onclick="toggleWishLock(2)" title="公开/隐藏">🔓</button>
+            </div>
+        </div>
+        <div class="wish-lock-hint" id="wishLockHint"></div>
+        <div class="wish-input-date" id="wishInputDate"></div>
+        <button class="cake-btn cake-btn-primary" onclick="submitWishes(event)">✨ 许下愿望</button>
+    </div>
+
+    <!-- 庆祝层 -->
+    <div class="celebration-overlay" id="celebrationOverlay" onclick="enterMainPage()">
+        <div class="confetti-container" id="confettiContainer"></div>
+        <div class="celebration-text">
+            <div class="celebration-emoji">🎂🎉</div>
+            <div class="celebration-main">田佳骏<span id="celebAge">19</span>岁啦！宝贝生日快乐哦！</div>
+            <div class="celebration-sub">宝宝许的每一个愿望都奏效</div>
+            <div class="celebration-hint">点击任意处进入 ✨</div>
+        </div>
+    </div>
+
+    <!-- 媒体查看器（点开查看大图/视频） -->
+    <div class="media-viewer-overlay" id="mediaViewer" onclick="closeMediaViewer()">
+        <div class="media-viewer-content" onclick="event.stopPropagation()">
+            <button class="media-viewer-close" onclick="closeMediaViewer()">×</button>
+            <div id="mediaViewerContent"></div>
+        </div>
+    </div>
+
+    <!-- 主内容 -->
+    <div class="main-content" id="mainContent">
+
+        <!-- 导航 -->
+        <nav class="nav-bar">
+            <div class="nav-logo">💕 YIYI & LELE</div>
+            <button class="pwd-manage-btn" onclick="openPwdManage()">🔒 密码管理</button>
+            <ul class="nav-links">
+                <li><a href="#hero">🏠 首页</a></li>
+                <li><a href="#barrage">💬 心里话</a></li>
+                <li><a href="#timeline">📸 幸福瞬间</a></li>
+                <li><a href="#upload">📁 上传回忆</a></li>
+                <li><a href="#wish">🎂 祝福</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero-section" id="hero">
+            <div class="hero-bg-circle"></div>
+            <div class="hero-bg-circle"></div>
+            <div class="hero-bg-circle"></div>
+
+            <div class="hero-badge">🎂 HAPPY BIRTHDAY 🎂</div>
+            <h1 class="hero-title">YIYI & LELE</h1>
+            <div class="hero-name">送给 田佳骏 的生日礼物</div>
+            <p class="hero-subtitle">
+                在这个特别的日子里，<br>
+                李文乐想对你说：<br>
+                <strong>生日快乐，田佳骏！</strong><br>
+                祝愿我的宝宝平安喜乐，岁岁常欢喜，得皆所愿哦！🌸
+            </p>
+
+            <div class="hero-cake" onclick="triggerFirework(event)">
+                <span class="cake-sparkle">✨</span>
+                <span class="cake-sparkle">⭐</span>
+                <span class="cake-sparkle">✨</span>
+                <span class="cake-sparkle">🌟</span>
+                <span class="cake-emoji">🎂</span>
+                <span class="cake-sparkle">✨</span>
+                <span class="cake-sparkle">💫</span>
+                <span class="cake-sparkle">✨</span>
+                <span class="cake-sparkle">⭐</span>
+            </div>
+
+            <!-- 生日愿望展示 -->
+            <div class="hero-wishes" id="heroWishes">
+                <div class="hero-wishes-title">🌟 生日愿望</div>
+                <div class="wish-empty-hint" id="wishEmptyHint">许愿后，愿望会显示在这里哦 🕯️</div>
+            </div>
+
+            <div class="scroll-hint">
+                <span>向下滑动探索更多</span>
+                <span class="scroll-arrow">↓</span>
+            </div>
+        </section>
+
+        <!-- 弹幕区 -->
+        <section class="barrage-section" id="barrage">
+            <div class="section-header">
+                <span class="section-icon">💌</span>
+                <h2 class="section-title">我想对你说</h2>
+                <div class="divider"></div>
+                <p class="section-desc">每一句话，都藏着我们的真心 💕 在方框内上下滑动浏览吧 ↑↓</p>
+            </div>
+
+            <div class="barrage-stage" id="barrageStage">
+                <!-- 弹幕将在这里动态生成 -->
+            </div>
+
+            <div class="barrage-controls">
+                <div class="barrage-input-group">
+                    <select class="barrage-select" id="senderSelect">
+                        <option value="YIYI">💕 YIYI</option>
+                        <option value="LELE" selected>💕 LELE</option>
+                    </select>
+                    <input type="text" class="barrage-input" id="barrageInput" placeholder="写下你想说的话..." maxlength="50">
+                    <button class="btn-primary" onclick="addBarrage()">发送 💕</button>
+                </div>
+                <div class="barrage-presets">
+                    <span class="preset-tag" onclick="sendPreset('生日快乐田佳骏！🎉')">🎂 生日快乐</span>
+                    <span class="preset-tag" onclick="sendPreset('永远开心！😊')">😊 永远开心</span>
+                    <span class="preset-tag" onclick="sendPreset('我们永远在一起！💕')">💕 在一起</span>
+                    <span class="preset-tag" onclick="sendPreset('你是最棒的！🌟')">🌟 最棒的</span>
+                    <span class="preset-tag" onclick="sendPreset('每天都爱你！❤️')">❤️ 每天爱你</span>
+                    <span class="preset-tag" onclick="sendPreset('愿你梦想成真！✨')">✨ 梦想成真</span>
+                    <span class="preset-tag" onclick="sendPreset('超级无敌喜欢你！🥰')">🥰 超级喜欢你</span>
+                    <span class="preset-tag" onclick="sendPreset('天天开心鸭！🦆')">🦆 天天开心</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 幸福瞬间 -->
+        <section class="timeline-section section" id="timeline">
+            <div class="section-header">
+                <span class="section-icon">📸</span>
+                <h2 class="section-title">幸福瞬间</h2>
+                <div class="divider"></div>
+                <p class="section-desc">那些闪闪发光的美好记忆 ✨</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item" style="animation-delay: 0.1s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">💕 第一次相遇</div>
+                        <div class="timeline-title">故事的开始</div>
+                        <div class="timeline-desc">命运让我们相遇，从那一刻起，世界变得更加美好。</div>
+                        <div class="expand-toggle" id="toggle_gal1" onclick="toggleCollapse('toggle_gal1','collapse_gal1')">
+                            <span>📂 展开查看照片</span><span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="collapsible-content" id="collapse_gal1">
+                            <div class="timeline-gallery" id="gal1"></div>
+                            <div class="gallery-add">＋
+                                <input type="file" accept="image/*,video/*" multiple onchange="handleTimelineUpload(event, 'gal1')">
+                            </div>
+                        </div>
+                        <textarea class="timeline-caption" placeholder="为这些瞬间写下文字..." onchange="saveTimelineCaption(this,'cap1')" id="cap1"></textarea>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="animation-delay: 0.3s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">🌟 一起大笑的日子</div>
+                        <div class="timeline-title">最开心的时光</div>
+                        <div class="timeline-desc">那些一起笑到肚子疼的日子，是最珍贵的宝藏。</div>
+                        <div class="expand-toggle" id="toggle_gal2" onclick="toggleCollapse('toggle_gal2','collapse_gal2')">
+                            <span>📂 展开查看照片</span><span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="collapsible-content" id="collapse_gal2">
+                            <div class="timeline-gallery" id="gal2"></div>
+                            <div class="gallery-add">＋
+                                <input type="file" accept="image/*,video/*" multiple onchange="handleTimelineUpload(event, 'gal2')">
+                            </div>
+                        </div>
+                        <textarea class="timeline-caption" placeholder="为这些瞬间写下文字..." onchange="saveTimelineCaption(this,'cap2')" id="cap2"></textarea>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="animation-delay: 0.5s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">🌈 温暖的瞬间</div>
+                        <div class="timeline-title">那些小确幸</div>
+                        <div class="timeline-desc">每一个平凡的瞬间，因为有你在身边，都变得特别温暖。</div>
+                        <div class="expand-toggle" id="toggle_gal3" onclick="toggleCollapse('toggle_gal3','collapse_gal3')">
+                            <span>📂 展开查看照片</span><span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="collapsible-content" id="collapse_gal3">
+                            <div class="timeline-gallery" id="gal3"></div>
+                            <div class="gallery-add">＋
+                                <input type="file" accept="image/*,video/*" multiple onchange="handleTimelineUpload(event, 'gal3')">
+                            </div>
+                        </div>
+                        <textarea class="timeline-caption" placeholder="为这些瞬间写下文字..." onchange="saveTimelineCaption(this,'cap3')" id="cap3"></textarea>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="animation-delay: 0.7s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">🎂 今天 — 你的生日</div>
+                        <div class="timeline-title">最特别的一天</div>
+                        <div class="timeline-desc">田佳骏，生日快乐！感谢你出现在我的生命中。李文乐永远爱田佳骏宝宝呀！</div>
+                        <div class="expand-toggle" id="toggle_gal4" onclick="toggleCollapse('toggle_gal4','collapse_gal4')">
+                            <span>📂 展开查看照片</span><span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="collapsible-content" id="collapse_gal4">
+                            <div class="timeline-gallery" id="gal4"></div>
+                            <div class="gallery-add">＋
+                                <input type="file" accept="image/*,video/*" multiple onchange="handleTimelineUpload(event, 'gal4')">
+                            </div>
+                        </div>
+                        <textarea class="timeline-caption" placeholder="为这些瞬间写下文字..." onchange="saveTimelineCaption(this,'cap4')" id="cap4"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 上传区 -->
+        <section class="upload-section section" id="upload">
+            <div class="section-header">
+                <span class="section-icon">📁</span>
+                <h2 class="section-title">上传回忆</h2>
+                <div class="divider"></div>
+                <p class="section-desc">上传我们的照片和视频，留住美好 🎬</p>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-card">
+                    <input type="file" accept="image/*,video/*" multiple onchange="handleUpload(event)">
+                    <span class="upload-icon">📷</span>
+                    <span class="upload-text">上传图片</span>
+                    <span class="upload-hint">可多选</span>
+                </div>
+                <div class="upload-card">
+                    <input type="file" accept="image/*,video/*" multiple onchange="handleUpload(event)">
+                    <span class="upload-icon">🎬</span>
+                    <span class="upload-text">上传视频</span>
+                    <span class="upload-hint">可多选</span>
+                </div>
+                <div class="upload-card">
+                    <input type="file" accept="image/*,video/*" multiple onchange="handleUpload(event)">
+                    <span class="upload-icon">🖼️</span>
+                    <span class="upload-text">更多回忆</span>
+                    <span class="upload-hint">可多选</span>
+                </div>
+            </div>
+
+            <div class="expand-toggle" id="toggle_upload" onclick="toggleCollapse('toggle_upload','collapse_upload')">
+                <span>📂 展开查看已上传回忆</span><span class="toggle-arrow">▼</span>
+            </div>
+            <div class="collapsible-content" id="collapse_upload">
+                <div class="upload-display-area" id="uploadDisplayArea"></div>
+            </div>
+        </section>
+
+        <!-- 祝福 -->
+        <section class="wish-section" id="wish">
+            <div class="wish-card">
+                <div class="wish-content">
+                    <span class="wish-emoji">🎂</span>
+                    <h2 class="wish-main">Happy Birthday!</h2>
+                    <p class="wish-detail">
+                        亲爱的 田佳骏：<br><br>
+                        愿你的笑容永远灿烂如花 🌸<br>
+                        愿你的眼里永远有星星 ✨<br>
+                        愿你的心中永远充满温暖 💕<br>
+                        愿你的一切都如你所愿 🌈<br><br>
+                        生日快乐！<br>
+                        今天以及每一天，你都是最特别的存在 🥰
+                    </p>
+                    <div class="wish-signature">— YIYI & LELE ♥</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <div class="footer-hearts">💕 🌸 💕 🌸 💕</div>
+            <p>Made with 💕 by LELE</p>
+            <p>祝 田佳骏 生日快乐 🎂</p>
+        </footer>
+    </div>
+
+    <!-- 弹幕弹窗 -->
+    <div class="barrage-modal-overlay" id="barrageModal" onclick="closeModal(event)">
+        <div class="barrage-modal" onclick="event.stopPropagation()">
+            <div class="modal-heart">💕</div>
+            <div class="modal-message" id="modalMessage"></div>
+            <div class="modal-from" id="modalFrom"></div>
+            <button class="modal-close" onclick="closeBarrageModal()">知道了 💕</button>
+        </div>
+    </div>
+
+    <!-- 回到顶部 -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <!-- 重新许愿 -->
+    <button class="rewish-btn" id="rewishBtn" onclick="restartWish()" title="再许一次愿">🎂</button>
+
+    <!-- 通用密码弹窗 -->
+    <div class="pwd-modal" id="pwdModal" onclick="event.stopPropagation()">
+        <div class="pwd-modal-icon" id="pwdModalIcon">🔒</div>
+        <div class="pwd-modal-title" id="pwdModalTitle">输入密码</div>
+        <div class="pwd-modal-desc" id="pwdModalDesc"></div>
+        <input type="password" class="pwd-input" id="pwdInput" placeholder="请输入密码" inputmode="numeric">
+        <div class="pwd-status" id="pwdStatus"></div>
+        <div class="pwd-modal-buttons">
+            <button class="btn-cancel" onclick="closePwdModal()">取消</button>
+            <button class="cake-btn cake-btn-primary" id="pwdConfirmBtn" onclick="confirmPwd()">确认</button>
+        </div>
+    </div>
+
+    <!-- 密码管理弹窗（含邮箱绑定） -->
+    <div class="pwd-manage-overlay" id="pwdManageModal" onclick="closePwdManage()">
+        <div class="pwd-manage-modal" onclick="event.stopPropagation()">
+            <div class="pm-icon">🛠️</div>
+            <div class="pm-title">密码管理</div>
+
+            <div class="pm-status-row" id="pmPwdStatus"></div>
+            <div class="pm-status-row" id="pmEmailStatus"></div>
+
+            <!-- 绑定邮箱区域 -->
+            <div class="pm-section" id="pmBindSection">
+                <div class="pm-label">📧 绑定邮箱</div>
+                <div class="pm-hint">绑定邮箱后可通过邮箱修改 YIYI 密码</div>
+                <input type="email" class="pm-input" id="pmBindEmailInput" placeholder="输入邮箱地址">
+                <button class="pm-btn" onclick="bindEmail()">绑定邮箱</button>
+            </div>
+
+            <!-- 修改密码区域 -->
+            <div class="pm-section" id="pmChangeSection" style="display:none;">
+                <div class="pm-label">🔑 通过邮箱修改密码</div>
+                <div class="pm-hint">输入绑定的邮箱和新密码</div>
+                <input type="email" class="pm-input" id="pmChangeEmailInput" placeholder="绑定的邮箱">
+                <input type="password" class="pm-input" id="pmNewPwdInput" placeholder="新密码" inputmode="numeric">
+                <button class="pm-btn" onclick="changePwdViaEmail()">修改密码</button>
+                <button class="pm-link" onclick="unbindEmail()">解绑邮箱</button>
+            </div>
+
+            <!-- 重置密码区域 -->
+            <div class="pm-section" id="pmResetSection" style="display:none;">
+                <button class="pm-link" onclick="resetYiyiPassword()" style="color:#e74c3c;">🗑 重置密码（清除已设密码）</button>
+            </div>
+
+            <div class="pm-status" id="pmManageStatus"></div>
+            <button class="btn-cancel pm-close-btn" onclick="closePwdManage()">关闭</button>
+        </div>
+    </div>
+
+    <!-- 确认弹窗 -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="confirm-icon" id="confirmIcon">🗑️</div>
+        <div class="confirm-title" id="confirmTitle">确认删除？</div>
+        <div class="confirm-desc" id="confirmDesc">删除后无法恢复</div>
+        <div class="confirm-buttons">
+            <button class="btn-cancel" onclick="closeConfirm(false)">取消</button>
+            <button class="btn-danger" onclick="closeConfirm(true)">确认删除</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== 全局数据 ==========
+        const defaultMessages = [
+            { text: '生日快乐，田佳骏！🎉', from: 'LELE', date: '2026.07.20' },
+            { text: '你是世界上最棒的人！🌟', from: 'LELE', date: '2026.07.23' },
+            { text: '永远爱你！💕', from: 'LELE', date: '2026.07.26' },
+            { text: '每天都要开心哦！😊', from: 'LELE', date: '2026.07.29' },
+            { text: '你的笑容是最好的礼物 😄', from: 'LELE', date: '2026.08.01' },
+            { text: '愿你的梦想都能实现 ✨', from: 'LELE', date: '2026.08.02' },
+            { text: '和你在一起的每一天都很幸福 🌈', from: 'LELE', date: '2026.08.03' },
+            { text: '田佳骏，你是我的阳光 ☀️', from: 'LELE', date: '2026.08.03' },
+            { text: '谢谢你出现在我的生命中 🙏', from: 'LELE', date: '2026.08.04' },
+            { text: '以后也要一直在一起鸭！🦆', from: 'LELE', date: '2026.08.04' },
+            { text: '最幸运的事就是遇见你 🍀', from: 'LELE', date: '2026.08.05' },
+            { text: '你值得这世间一切美好 🌺', from: 'LELE', date: '2026.08.05' },
+        ];
+
+        const barrageColors = [
+            { bg: '#FFF0F5', color: '#D63384', border: '#FFB6C1' },
+            { bg: '#FFF8E7', color: '#E67E22', border: '#FFD700' },
+            { bg: '#F0FFF4', color: '#27AE60', border: '#98FB98' },
+            { bg: '#F0F8FF', color: '#3498DB', border: '#87CEEB' },
+            { bg: '#FFF0F0', color: '#E74C3C', border: '#FFB6C1' },
+            { bg: '#F5F0FF', color: '#9B59B6', border: '#DDA0DD' },
+            { bg: '#FFFAF0', color: '#FF6347', border: '#FFA07A' },
+            { bg: '#F0FFFF', color: '#008B8B', border: '#AFEEEE' },
+        ];
+
+        let barrageInterval = null;
+        let uploadedFiles = [];
+
+        // ========== 密码 & 生日愿望 ==========
+        // 只保留 YIYI 密码；首次许隐藏愿望时设置，可通过邮箱修改
+        let passwords = { YIYI: null };
+        let yiyiPasswordSet = false;
+        let boundEmail = null; // 绑定的邮箱
+        let birthdayWishes = [];
+        // 密码弹窗当前模式与上下文
+        let pwdMode = null; // 'view-wish' | 'set-yiyi' | 'manage'
+        let pwdContext = null;
+        let confirmCallback = null;
+
+        // ========== 持久化存储 ==========
+        function savePwdData() {
+            try {
+                localStorage.setItem('yiyi_birthday_data', JSON.stringify({
+                    yiyiPwd: passwords.YIYI,
+                    yiyiPasswordSet: yiyiPasswordSet,
+                    boundEmail: boundEmail,
+                    birthdayWishes: birthdayWishes
+                }));
+            } catch(e) { console.warn('保存失败', e); }
+        }
+
+        function loadPwdData() {
+            try {
+                const raw = localStorage.getItem('yiyi_birthday_data');
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                passwords.YIYI = data.yiyiPwd || null;
+                yiyiPasswordSet = data.yiyiPasswordSet || false;
+                boundEmail = data.boundEmail || null;
+                if (Array.isArray(data.birthdayWishes)) birthdayWishes = data.birthdayWishes;
+            } catch(e) { console.warn('加载失败', e); }
+        }
+
+        // ========== 页面数据持久化（消息、上传、幸福瞬间） ==========
+        let customMessages = [];   // 用户添加的心里话 {text, from, date}
+        let uploadItems = [];      // 上传回忆 {src, type, caption, date}
+        let timelineItems = {};    // 幸福瞬间 {gal1: [{src,type,caption,date}], ...}
+        let timelineCaptions = {}; // 幸福瞬间文字 {cap1: text, ...}
+
+        function savePageData() {
+            try {
+                localStorage.setItem('yiyi_page_data', JSON.stringify({
+                    customMessages: customMessages,
+                    uploadItems: uploadItems,
+                    timelineItems: timelineItems,
+                    timelineCaptions: timelineCaptions
+                }));
+            } catch(e) {
+                console.warn('页面数据保存失败（可能存储空间不足）', e);
+                showToast('存储空间不足，部分内容可能无法保存');
+            }
+        }
+
+        function loadPageData() {
+            try {
+                const raw = localStorage.getItem('yiyi_page_data');
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                customMessages = Array.isArray(data.customMessages) ? data.customMessages : [];
+                uploadItems = Array.isArray(data.uploadItems) ? data.uploadItems : [];
+                timelineItems = data.timelineItems || {};
+                timelineCaptions = data.timelineCaptions || {};
+            } catch(e) { console.warn('页面数据加载失败', e); }
+        }
+
+        // ========== 开场 ==========
+        function enterPage() {
+            const overlay = document.getElementById('introOverlay');
+            overlay.classList.add('hide');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                startCakeScene();
+            }, 1000);
+        }
+
+        // ========== 蛋糕蜡烛许愿流程 ==========
+        // 状态：intro / cake-scene / wishing / wishing-blow / celebration / main
+        let wishState = 'intro';
+
+        function startCakeScene() {
+            wishState = 'cake-scene';
+            const cakeOverlay = document.getElementById('cakeSceneOverlay');
+            // 重置场景
+            cakeOverlay.classList.remove('dimmed');
+            document.getElementById('cakeSceneButtons').style.display = '';
+            const hint = document.getElementById('cakeSceneHint');
+            hint.textContent = '点亮蜡烛，许下心愿吧 🕯️';
+            hint.style.display = '';
+            // 蜡烛熄灭、清除烟雾
+            document.querySelectorAll('.candle').forEach(c => c.classList.remove('lit', 'smoke'));
+            // 重置蛋糕入场动画
+            const cake = document.querySelector('.birthday-cake');
+            cake.style.animation = 'none';
+            void cake.offsetWidth;
+            cake.style.animation = '';
+            // 隐藏许愿框与庆祝层
+            document.getElementById('wishInputModal').classList.remove('active');
+            document.getElementById('celebrationOverlay').classList.remove('active');
+            // 提前初始化心里话列表容器，便于许愿时加入
+            if (!document.getElementById('barrageList')) {
+                const list = document.createElement('div');
+                list.className = 'barrage-list';
+                list.id = 'barrageList';
+                document.getElementById('barrageStage').appendChild(list);
+            }
+            cakeOverlay.classList.add('active');
+        }
+
+        function handleCakeSceneClick(event) {
+            // 许愿完成后，点击任意处吹灭蜡烛
+            if (wishState === 'wishing-blow') {
+                blowCandles();
+            }
+        }
+
+        function lightCandles(event) {
+            if (event) event.stopPropagation();
+            wishState = 'wishing';
+            const cakeOverlay = document.getElementById('cakeSceneOverlay');
+            // 点燃所有蜡烛
+            document.querySelectorAll('.candle').forEach(c => c.classList.add('lit'));
+            // 暗化背景，只留蛋糕蜡烛发光
+            setTimeout(() => {
+                cakeOverlay.classList.add('dimmed');
+                document.getElementById('cakeSceneButtons').style.display = 'none';
+                document.getElementById('cakeSceneHint').style.display = 'none';
+                // 弹出许愿输入框
+                setTimeout(() => {
+                    resetWishForm();
+                    document.getElementById('wishInputDate').textContent = '📅 ' + getTodayDate();
+                    document.getElementById('wishInputModal').classList.add('active');
+                    document.querySelector('.wish-field').focus();
+                }, 700);
+            }, 600);
+        }
+
+        function skipWish(event) {
+            if (event) event.stopPropagation();
+            enterMainPage();
+        }
+
+        // ===== 三愿望表单状态 =====
+        let wishSender = 'YIYI';
+        let wishLocks = [false, false, false];
+
+        function resetWishForm() {
+            wishSender = 'YIYI';
+            wishLocks = [false, false, false];
+            document.querySelectorAll('.wish-field').forEach(f => f.value = '');
+            document.querySelectorAll('.wish-sender-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.sender === 'YIYI');
+            });
+            document.querySelectorAll('.wish-lock-btn').forEach(b => {
+                b.textContent = '🔓';
+                b.classList.remove('locked');
+            });
+            updateWishLockHint();
+        }
+
+        function selectWishSender(sender) {
+            wishSender = sender;
+            document.querySelectorAll('.wish-sender-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.sender === sender);
+            });
+            updateWishLockHint();
+        }
+
+        function updateWishLockHint() {
+            const hint = document.getElementById('wishLockHint');
+            const hasLocked = wishLocks.some(l => l);
+            if (!hasLocked) {
+                hint.textContent = '';
+                return;
+            }
+            if (passwords.YIYI) {
+                hint.textContent = '🔒 隐藏的愿望将用 YIYI 密码保护';
+            } else {
+                hint.textContent = '🔒 首次隐藏愿望需设置 YIYI 密码';
+            }
+        }
+
+        function toggleWishLock(idx) {
+            wishLocks[idx] = !wishLocks[idx];
+            const btn = document.querySelectorAll('.wish-lock-btn')[idx];
+            if (wishLocks[idx]) {
+                btn.textContent = '🔒';
+                btn.classList.add('locked');
+            } else {
+                btn.textContent = '🔓';
+                btn.classList.remove('locked');
+            }
+            updateWishLockHint();
+        }
+
+        function submitWishes(event) {
+            if (event) event.stopPropagation();
+            const fields = document.querySelectorAll('.wish-field');
+            const wishes = [];
+            for (let i = 0; i < fields.length; i++) {
+                const text = fields[i].value.trim();
+                if (text) {
+                    wishes.push({ text, hidden: wishLocks[i], sender: wishSender, date: getTodayDate(), revealed: false });
+                }
+            }
+            if (wishes.length === 0) {
+                showToast('至少写下一个愿望吧 ✨');
+                return;
+            }
+
+            // 处理隐藏愿望时首次设置 YIYI 密码
+            const hasHidden = wishes.some(w => w.hidden);
+            if (hasHidden && !passwords.YIYI) {
+                // 先存住待提交的愿望，设置完密码再继续
+                pendingWishes = wishes;
+                document.getElementById('wishInputModal').classList.remove('active');
+                openSetYiyiPassword();
+                return;
+            }
+
+            finalizeWishes(wishes);
+        }
+
+        let pendingWishes = null;
+
+        function finalizeWishes(wishes) {
+            // 存入生日愿望
+            birthdayWishes.push(...wishes);
+            savePwdData();
+            // 公开愿望也加入"我想对你说"列表
+            wishes.forEach(w => {
+                if (!w.hidden) createBarrageItem(w.text, '🎂 许愿', w.date);
+            });
+            // 关闭许愿框
+            document.getElementById('wishInputModal').classList.remove('active');
+            // 提示点击吹灭
+            const hint = document.getElementById('cakeSceneHint');
+            hint.innerHTML = '许愿成功！🎉<br>点击任意处吹灭蜡烛 🕯️ → 💨';
+            hint.style.display = '';
+            showToast('愿望已记下，即将成真 ✨');
+            wishState = 'wishing-blow';
+        }
+
+        function blowCandles() {
+            wishState = 'celebration';
+            // 吹灭蜡烛 + 烟雾
+            document.querySelectorAll('.candle').forEach(c => {
+                c.classList.remove('lit');
+                c.classList.add('smoke');
+                setTimeout(() => c.classList.remove('smoke'), 1300);
+            });
+            // 恢复颜色，进入庆祝
+            setTimeout(() => {
+                document.getElementById('cakeSceneOverlay').classList.remove('active', 'dimmed');
+                showCelebration();
+            }, 900);
+        }
+
+        function showCelebration() {
+            const celebOverlay = document.getElementById('celebrationOverlay');
+            // 动态年龄：2026 年为 19 岁，逐年递增
+            document.getElementById('celebAge').textContent = calculateAge();
+            celebOverlay.classList.add('active');
+            // 重置文字动画
+            const main = document.querySelector('.celebration-main');
+            const sub = document.querySelector('.celebration-sub');
+            main.style.animation = 'none';
+            sub.style.animation = 'none';
+            void main.offsetWidth;
+            main.style.animation = '';
+            sub.style.animation = '';
+            // 发射礼炮，并持续补充
+            launchConfetti();
+            if (window._confettiTimer) clearInterval(window._confettiTimer);
+            window._confettiTimer = setInterval(launchConfetti, 1600);
+        }
+
+        function enterMainPage() {
+            wishState = 'main';
+            // 停止礼炮
+            if (window._confettiTimer) {
+                clearInterval(window._confettiTimer);
+                window._confettiTimer = null;
+            }
+            // 隐藏所有 overlay
+            document.getElementById('cakeSceneOverlay').classList.remove('active', 'dimmed');
+            document.getElementById('celebrationOverlay').classList.remove('active');
+            document.getElementById('wishInputModal').classList.remove('active');
+            document.getElementById('confettiContainer').innerHTML = '';
+            // 显示主内容
+            document.getElementById('mainContent').classList.add('show');
+            // 首次启动弹幕与花瓣
+            if (!window._mainStarted) {
+                startBarrage();
+                createPetals();
+                window._mainStarted = true;
+            }
+            // 显示"重新许愿"按钮
+            document.getElementById('rewishBtn').classList.add('show');
+            // 渲染主页愿望
+            renderHeroWishes();
+            // 恢复上传回忆与幸福瞬间
+            restoreUploads();
+            restoreTimeline();
+        }
+
+        function restartWish() {
+            document.getElementById('rewishBtn').classList.remove('show');
+            startCakeScene();
+        }
+
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#FF6B8A', '#FFD700', '#FF85A2', '#FFB6C1', '#FF69B4', '#FFA07A', '#87CEEB', '#98FB98', '#DDA0DD', '#FF4500'];
+            for (let i = 0; i < 40; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const left = Math.random() * 100;
+                const delay = Math.random() * 0.6;
+                const duration = 2.2 + Math.random() * 1.8;
+                const size = 7 + Math.random() * 9;
+                const isCircle = Math.random() > 0.5;
+                piece.style.cssText = `
+                    left: ${left}%;
+                    width: ${size}px;
+                    height: ${size * (isCircle ? 1 : 1.6)}px;
+                    background: ${color};
+                    border-radius: ${isCircle ? '50%' : '2px'};
+                    animation-delay: ${delay}s;
+                    animation-duration: ${duration}s;
+                `;
+                container.appendChild(piece);
+                setTimeout(() => piece.remove(), (duration + delay) * 1000 + 200);
+            }
+        }
+
+        // ========== 主页愿望展示 ==========
+        function renderHeroWishes() {
+            const container = document.getElementById('heroWishes');
+            const empty = document.getElementById('wishEmptyHint');
+            // 清除旧卡片（保留标题与空提示）
+            container.querySelectorAll('.wish-card-display').forEach(c => c.remove());
+
+            if (birthdayWishes.length === 0) {
+                if (empty) empty.style.display = '';
+                return;
+            }
+            if (empty) empty.style.display = 'none';
+
+            birthdayWishes.forEach((w, idx) => {
+                const card = document.createElement('div');
+                card.className = 'wish-card-display';
+                card.style.animationDelay = (idx * 0.1) + 's';
+
+                if (w.hidden && !w.revealed) {
+                    card.classList.add('wish-card-locked');
+                    card.innerHTML = `
+                        <div class="wish-card-icon">🔒</div>
+                        <div class="wish-card-body">
+                            <div class="wish-card-text">这是一个被 ${escapeHtml(w.sender)} 藏起来的秘密愿望 🤫</div>
+                            <div class="wish-card-meta">${escapeHtml(w.sender)} · ${w.date} · 点击输入密码查看</div>
+                        </div>
+                    `;
+                    card.onclick = () => openViewWish(idx);
+                } else {
+                    card.innerHTML = `
+                        <div class="wish-card-icon">${w.hidden ? '🔓' : '🌟'}</div>
+                        <div class="wish-card-body">
+                            <div class="wish-card-text">${escapeHtml(w.text)}</div>
+                            <div class="wish-card-meta">${escapeHtml(w.sender)} · ${w.date}${w.hidden ? ' · 已解锁' : ''}</div>
+                        </div>
+                    `;
+                }
+                container.appendChild(card);
+            });
+        }
+
+        // ========== 密码系统 ==========
+        function openPwdModal(opts) {
+            pwdMode = opts.mode;
+            pwdContext = (opts.context !== undefined && opts.context !== null) ? opts.context : null;
+            document.getElementById('pwdModalIcon').textContent = opts.icon || '🔒';
+            document.getElementById('pwdModalTitle').textContent = opts.title;
+            document.getElementById('pwdModalDesc').textContent = opts.desc || '';
+            document.getElementById('pwdConfirmBtn').textContent = opts.btn || '确认';
+            document.getElementById('pwdStatus').textContent = '';
+            const input = document.getElementById('pwdInput');
+            input.value = '';
+            input.placeholder = opts.placeholder || '请输入密码';
+            document.getElementById('pwdModal').classList.add('active');
+            setTimeout(() => input.focus(), 200);
+        }
+
+        function closePwdModal() {
+            document.getElementById('pwdModal').classList.remove('active');
+            pwdMode = null;
+            pwdContext = null;
+        }
+
+        // YIYI 首次设置密码（只能设一次）
+        function openSetYiyiPassword() {
+            openPwdModal({
+                mode: 'set-yiyi',
+                icon: '🔑',
+                title: '设置 YIYI 密码',
+                desc: 'YIYI 的密码只能设置一次，请牢记。设置后用于保护你的隐藏愿望。',
+                placeholder: '设置 YIYI 密码',
+                btn: '设置密码'
+            });
+        }
+
+        // 查看隐藏愿望
+        function openViewWish(idx) {
+            openPwdModal({
+                mode: 'view-wish',
+                icon: '🔒',
+                title: '查看隐藏愿望',
+                desc: '请输入 YIYI 密码',
+                placeholder: 'YIYI 密码',
+                btn: '解锁查看',
+                context: idx
+            });
+        }
+
+        // 主页左上角：密码管理（含邮箱绑定）
+        function openPwdManage() {
+            renderPwdManage();
+            document.getElementById('pwdManageModal').classList.add('active');
+        }
+
+        function closePwdManage() {
+            document.getElementById('pwdManageModal').classList.remove('active');
+        }
+
+        function renderPwdManage() {
+            // 更新状态显示
+            const pwdStatus = document.getElementById('pmPwdStatus');
+            const emailStatus = document.getElementById('pmEmailStatus');
+            const changeSection = document.getElementById('pmChangeSection');
+            const bindSection = document.getElementById('pmBindSection');
+            const resetSection = document.getElementById('pmResetSection');
+
+            if (passwords.YIYI) {
+                pwdStatus.innerHTML = '🔑 YIYI 密码：<strong>已设置</strong>';
+                resetSection.style.display = '';
+            } else {
+                pwdStatus.innerHTML = '🔑 YIYI 密码：<strong>未设置</strong>（许愿时首次设置）';
+                resetSection.style.display = 'none';
+            }
+
+            if (boundEmail) {
+                emailStatus.innerHTML = '📧 邮箱已绑定（需输入绑定邮箱验证后修改密码）';
+                bindSection.style.display = 'none';
+                changeSection.style.display = '';
+            } else {
+                emailStatus.innerHTML = '📧 尚未绑定邮箱';
+                bindSection.style.display = '';
+                changeSection.style.display = 'none';
+            }
+
+            // 清空输入框
+            document.getElementById('pmBindEmailInput').value = '';
+            document.getElementById('pmChangeEmailInput').value = '';
+            document.getElementById('pmNewPwdInput').value = '';
+            document.getElementById('pmManageStatus').textContent = '';
+        }
+
+        // 重置 YIYI 密码（清除已设密码、邮箱、解锁状态）
+        function resetYiyiPassword() {
+            showConfirm({
+                icon: '🗑️',
+                title: '重置密码？',
+                desc: '将清除 YIYI 密码、绑定邮箱，隐藏愿望将重新锁定',
+                onConfirm: function() {
+                    passwords.YIYI = null;
+                    yiyiPasswordSet = false;
+                    boundEmail = null;
+                    // 重新锁定所有已解锁的隐藏愿望
+                    birthdayWishes.forEach(w => { w.revealed = false; });
+                    savePwdData();
+                    showToast('密码已重置 🗝️');
+                    renderPwdManage();
+                    renderHeroWishes();
+                }
+            });
+        }
+
+        // 绑定邮箱
+        function bindEmail() {
+            const input = document.getElementById('pmBindEmailInput');
+            const email = input.value.trim();
+            const status = document.getElementById('pmManageStatus');
+            if (!email) {
+                status.textContent = '请输入邮箱地址';
+                return;
+            }
+            // 简单邮箱格式校验
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                status.textContent = '邮箱格式不正确';
+                return;
+            }
+            boundEmail = email;
+            savePwdData();
+            showToast('邮箱绑定成功 📧');
+            renderPwdManage();
+        }
+
+        // 更换邮箱（需验证当前邮箱）
+        function unbindEmail() {
+            boundEmail = null;
+            savePwdData();
+            showToast('已解绑邮箱');
+            renderPwdManage();
+        }
+
+        // 通过邮箱修改 YIYI 密码
+        function changePwdViaEmail() {
+            const emailInput = document.getElementById('pmChangeEmailInput');
+            const pwdInput = document.getElementById('pmNewPwdInput');
+            const email = emailInput.value.trim();
+            const newPwd = pwdInput.value.trim();
+            const status = document.getElementById('pmManageStatus');
+
+            if (!email) {
+                status.textContent = '请输入绑定的邮箱';
+                return;
+            }
+            if (email !== boundEmail) {
+                status.textContent = '邮箱与绑定邮箱不一致';
+                return;
+            }
+            if (newPwd.length < 2) {
+                status.textContent = '新密码至少 2 位';
+                return;
+            }
+
+            passwords.YIYI = newPwd;
+            yiyiPasswordSet = true;
+            savePwdData();
+            showToast('YIYI 密码已修改 🔑');
+            closePwdManage();
+            renderHeroWishes();
+        }
+
+        function confirmPwd() {
+            const input = document.getElementById('pwdInput');
+            const val = input.value.trim();
+            const status = document.getElementById('pwdStatus');
+
+            if (pwdMode === 'set-yiyi') {
+                if (val.length < 2) {
+                    status.textContent = '密码至少 2 位';
+                    return;
+                }
+                passwords.YIYI = val;
+                yiyiPasswordSet = true;
+                savePwdData();
+                closePwdModal();
+                showToast('YIYI 密码已设置 ✨');
+                // 继续提交待处理的愿望
+                if (pendingWishes) {
+                    const wishes = pendingWishes;
+                    pendingWishes = null;
+                    finalizeWishes(wishes);
+                }
+                return;
+            }
+
+            if (pwdMode === 'view-wish') {
+                const idx = pwdContext;
+                const w = birthdayWishes[idx];
+                if (val === passwords.YIYI) {
+                    w.revealed = true;
+                    savePwdData();
+                    closePwdModal();
+                    renderHeroWishes();
+                    showToast('愿望已解锁 🌟');
+                } else {
+                    status.textContent = '密码错误，再试试';
+                }
+                return;
+            }
+        }
+
+        // 密码输入回车确认
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPwdData();
+            loadPageData();
+            document.getElementById('pwdInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') confirmPwd();
+            });
+        });
+
+        // ========== 通用确认弹窗 ==========
+        function showConfirm(opts) {
+            document.getElementById('confirmIcon').textContent = opts.icon || '🗑️';
+            document.getElementById('confirmTitle').textContent = opts.title || '确认删除？';
+            document.getElementById('confirmDesc').textContent = opts.desc || '删除后无法恢复';
+            confirmCallback = opts.onConfirm || null;
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function closeConfirm(ok) {
+            document.getElementById('confirmModal').classList.remove('active');
+            const cb = confirmCallback;
+            confirmCallback = null;
+            if (ok && cb) cb();
+        }
+
+        // ========== 花瓣飘落 ==========
+        function createPetals() {
+            const container = document.getElementById('petalContainer');
+            const petalColors = ['#FFB6C1', '#FFC0CB', '#FFD1DC', '#FFDDE6', '#FF85A2', '#FFA0B4'];
+
+            function addPetal() {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                const size = 15 + Math.random() * 20;
+                const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+                const left = Math.random() * 100;
+                const duration = 8 + Math.random() * 12;
+                const delay = Math.random() * 5;
+
+                petal.style.cssText = `
+                    left: ${left}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                `;
+
+                petal.innerHTML = `<svg viewBox="0 0 30 30">
+                    <path d="M15 0 C15 8, 25 12, 30 15 C25 18, 15 22, 15 30 C15 22, 5 18, 0 15 C5 12, 15 8, 15 0Z" fill="${color}" opacity="0.7"/>
+                </svg>`;
+
+                container.appendChild(petal);
+
+                setTimeout(() => petal.remove(), (duration + delay) * 1000);
+            }
+
+            // 初始创建一批花瓣
+            for (let i = 0; i < 15; i++) {
+                setTimeout(addPetal, i * 300);
+            }
+
+            // 持续创建花瓣
+            setInterval(addPetal, 2000);
+        }
+
+        // ========== 日期 & 转义工具 ==========
+        function getTodayDate() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const h = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            return `${y}.${m}.${d} ${h}:${min}:${s}`;
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // 年龄：2026 年为 19 岁，之后逐年递增（2027=20, 2028=21...）
+        function calculateAge() {
+            return 19 + (new Date().getFullYear() - 2026);
+        }
+
+        // ========== 心里话列表 ==========
+        function startBarrage() {
+            const stage = document.getElementById('barrageStage');
+            // 创建或获取列表容器（许愿流程可能已提前创建）
+            let list = document.getElementById('barrageList');
+            if (!list) {
+                list = document.createElement('div');
+                list.className = 'barrage-list';
+                list.id = 'barrageList';
+                stage.appendChild(list);
+            }
+
+            // 依次加载所有默认心里话
+            defaultMessages.forEach((msg, index) => {
+                setTimeout(() => {
+                    createBarrageItem(msg.text, msg.from, msg.date);
+                }, index * 80);
+            });
+
+            // 加载用户自定义消息
+            setTimeout(() => {
+                customMessages.forEach(msg => {
+                    createBarrageItem(msg.text, msg.from, msg.date);
+                });
+            }, defaultMessages.length * 80 + 100);
+
+            // 保持在顶部，让用户从第一条开始滑动浏览
+            setTimeout(() => { stage.scrollTop = 0; }, defaultMessages.length * 80 + 200);
+        }
+
+        function createBarrageItem(text, from, date) {
+            const list = document.getElementById('barrageList');
+            if (!list) return;
+            const colorScheme = barrageColors[Math.floor(Math.random() * barrageColors.length)];
+
+            const item = document.createElement('div');
+            item.className = 'barrage-item';
+            item.style.cssText = `
+                background: ${colorScheme.bg};
+                color: ${colorScheme.color};
+                border: 1px solid ${colorScheme.border};
+            `;
+
+            const displayDate = date || getTodayDate();
+
+            item.innerHTML = `
+                <div class="barrage-text">💕 ${escapeHtml(text)}</div>
+                <div class="barrage-meta">
+                    <span>— ${escapeHtml(from)}</span>
+                    <span class="barrage-date">· ${displayDate}</span>
+                </div>
+            `;
+
+            item.onclick = () => showBarrageModal(text, from, displayDate);
+            list.appendChild(item);
+        }
+
+        function addBarrage() {
+            const input = document.getElementById('barrageInput');
+            const select = document.getElementById('senderSelect');
+            const text = input.value.trim();
+            const from = select ? select.value : 'LELE';
+            if (!text) {
+                showToast('请先写下你想说的话 💭');
+                return;
+            }
+            const date = getTodayDate();
+            createBarrageItem(text, from, date);
+            customMessages.push({ text, from, date });
+            savePageData();
+            input.value = '';
+            showToast('发送成功！你的心意已留下 💕');
+            triggerFirework(event);
+            // 自动滚动到底部，展示最新写下的话
+            const stage = document.getElementById('barrageStage');
+            stage.scrollTo({ top: stage.scrollHeight, behavior: 'smooth' });
+        }
+
+        function sendPreset(text) {
+            document.getElementById('barrageInput').value = text;
+            addBarrage();
+        }
+
+        // 回车发送
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('barrageInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addBarrage();
+            });
+        });
+
+        // ========== 弹窗 ==========
+        function showBarrageModal(text, from, date) {
+            document.getElementById('modalMessage').textContent = `"${text}"`;
+            document.getElementById('modalFrom').textContent = date
+                ? `— ${from} · ${date}`
+                : `— ${from}`;
+            const modal = document.getElementById('barrageModal');
+            modal.classList.add('active');
+        }
+
+        function closeBarrageModal() {
+            document.getElementById('barrageModal').classList.remove('active');
+        }
+
+        function closeModal(event) {
+            if (event.target === event.currentTarget) closeBarrageModal();
+        }
+
+        // ========== 展开/收起功能 ==========
+        function toggleCollapse(toggleId, contentId) {
+            const toggle = document.getElementById(toggleId);
+            const content = document.getElementById(contentId);
+            if (!toggle || !content) return;
+            const isExpanded = toggle.classList.toggle('expanded');
+            content.classList.toggle('expanded', isExpanded);
+            const span = toggle.querySelector('span:first-child');
+            if (span) {
+                span.textContent = isExpanded
+                    ? span.textContent.replace('展开查看', '收起')
+                    : span.textContent.replace('收起', '展开查看');
+            }
+        }
+
+        // 更新展开按钮文字（显示数量）
+        function updateToggleText(toggleId, count, label) {
+            const toggle = document.getElementById(toggleId);
+            if (!toggle) return;
+            const span = toggle.querySelector('span:first-child');
+            if (!span) return;
+            const isExpanded = toggle.classList.contains('expanded');
+            const prefix = isExpanded ? '收起' : '展开查看';
+            span.textContent = count > 0 ? `${prefix}${label}（${count}）` : `${prefix}${label}`;
+        }
+
+        // ========== 上传回忆（多文件 + 日期 + 可编辑文字 + 删除确认） ==========
+        function handleUpload(event) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
+            const date = getTodayDate();
+            let added = 0;
+
+            files.forEach(file => {
+                if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return;
+                added++;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const src = e.target.result;
+                    const type = file.type.startsWith('image/') ? 'image' : 'video';
+                    const item = { src, type, caption: '', date };
+                    uploadItems.push(item);
+                    renderUploadCard(item, uploadItems.length - 1);
+                    savePageData();
+                    updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
+                };
+                reader.readAsDataURL(file);
+            });
+
+            showToast(`已添加 ${added} 个回忆！🎬`);
+            event.target.value = '';
+        }
+
+        // 渲染单个上传回忆卡片（支持恢复）
+        function renderUploadCard(item, idx) {
+            const area = document.getElementById('uploadDisplayArea');
+            if (!area) return;
+            const card = document.createElement('div');
+            card.className = 'uploaded-card';
+
+            const mediaWrap = document.createElement('div');
+            mediaWrap.className = 'upload-media-wrap';
+            mediaWrap.style.cursor = 'pointer';
+            if (item.type === 'image') {
+                mediaWrap.innerHTML = `<img src="${item.src}" alt="回忆照片">`;
+            } else {
+                mediaWrap.innerHTML = `<video src="${item.src}"></video><span class="video-icon">▶</span>`;
+            }
+            mediaWrap.onclick = () => showMediaViewer(item.src, item.type, item.caption);
+            card.appendChild(mediaWrap);
+
+            // 删除按钮（带确认）
+            const delBtn = document.createElement('button');
+            delBtn.className = 'delete-btn';
+            delBtn.textContent = '×';
+            delBtn.onclick = (ev) => {
+                ev.stopPropagation();
+                showConfirm({
+                    icon: '🗑️',
+                    title: '删除这个回忆？',
+                    desc: '删除后无法恢复',
+                    onConfirm: () => {
+                        uploadItems.splice(idx, 1);
+                        card.remove();
+                        savePageData();
+                        updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
+                    }
+                });
+            };
+            card.appendChild(delBtn);
+
+            // 可编辑文字
+            const caption = document.createElement('input');
+            caption.type = 'text';
+            caption.className = 'upload-caption';
+            caption.placeholder = '为这段回忆写句话...';
+            caption.value = item.caption || '';
+            caption.onclick = (ev) => ev.stopPropagation();
+            caption.onchange = () => {
+                uploadItems[idx].caption = caption.value;
+                savePageData();
+            };
+            card.appendChild(caption);
+
+            // 日期
+            const dateEl = document.createElement('div');
+            dateEl.className = 'upload-date';
+            dateEl.textContent = '📅 ' + item.date;
+            card.appendChild(dateEl);
+
+            area.appendChild(card);
+        }
+
+        // 恢复所有上传回忆
+        function restoreUploads() {
+            const area = document.getElementById('uploadDisplayArea');
+            if (!area) return;
+            area.innerHTML = '';
+            uploadItems.forEach((item, idx) => renderUploadCard(item, idx));
+            updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
+        }
+
+        // ========== 幸福瞬间（多文件画廊 + 日期 + 可编辑文字 + 删除确认） ==========
+        function handleTimelineUpload(event, galId) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
+            const date = getTodayDate();
+            if (!timelineItems[galId]) timelineItems[galId] = [];
+            let added = 0;
+
+            files.forEach(file => {
+                if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return;
+                added++;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const src = e.target.result;
+                    const type = file.type.startsWith('image/') ? 'image' : 'video';
+                    const item = { src, type, caption: '', date };
+                    timelineItems[galId].push(item);
+                    renderTimelineItem(galId, item, timelineItems[galId].length - 1);
+                    savePageData();
+                    updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
+                };
+                reader.readAsDataURL(file);
+            });
+
+            showToast(`已添加 ${added} 张照片到时光轴！📸`);
+            event.target.value = '';
+        }
+
+        // 渲染单个幸福瞬间卡片（支持恢复）
+        function renderTimelineItem(galId, item, idx) {
+            const gallery = document.getElementById(galId);
+            if (!gallery) return;
+            const el = document.createElement('div');
+            el.className = 'gallery-item';
+
+            // 媒体区域
+            const mediaWrap = document.createElement('div');
+            mediaWrap.className = 'gal-media';
+            mediaWrap.style.cursor = 'pointer';
+            if (item.type === 'image') {
+                mediaWrap.innerHTML = `<img src="${item.src}" alt="幸福瞬间">`;
+            } else {
+                mediaWrap.innerHTML = `<video src="${item.src}"></video>`;
+            }
+            mediaWrap.onclick = () => showMediaViewer(item.src, item.type, item.caption);
+            el.appendChild(mediaWrap);
+
+            // 删除按钮（带确认）
+            const del = document.createElement('button');
+            del.className = 'gal-delete';
+            del.textContent = '×';
+            del.onclick = (ev) => {
+                ev.stopPropagation();
+                showConfirm({
+                    icon: '🗑️',
+                    title: '删除这张照片？',
+                    desc: '删除后无法恢复',
+                    onConfirm: () => {
+                        timelineItems[galId].splice(idx, 1);
+                        el.remove();
+                        savePageData();
+                        updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
+                    }
+                });
+            };
+            el.appendChild(del);
+
+            // 日期
+            const dateEl = document.createElement('div');
+            dateEl.className = 'gal-date';
+            dateEl.textContent = '📅 ' + item.date;
+            el.appendChild(dateEl);
+
+            // 可编辑文字
+            const caption = document.createElement('input');
+            caption.type = 'text';
+            caption.className = 'gal-caption';
+            caption.placeholder = '为这张照片写句话...';
+            caption.value = item.caption || '';
+            caption.onclick = (ev) => ev.stopPropagation();
+            caption.onchange = () => {
+                timelineItems[galId][idx].caption = caption.value;
+                savePageData();
+            };
+            el.appendChild(caption);
+
+            gallery.appendChild(el);
+        }
+
+        // 恢复所有幸福瞬间
+        function restoreTimeline() {
+            for (const galId in timelineItems) {
+                if (Array.isArray(timelineItems[galId])) {
+                    timelineItems[galId].forEach((item, idx) => renderTimelineItem(galId, item, idx));
+                    updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
+                }
+            }
+            // 恢复文字说明
+            for (const capId in timelineCaptions) {
+                const el = document.getElementById(capId);
+                if (el) el.value = timelineCaptions[capId];
+            }
+        }
+
+        function saveTimelineCaption(el, capId) {
+            timelineCaptions[capId] = el.value;
+            savePageData();
+            showToast('文字已保存 ✍️');
+        }
+
+        // ========== Toast ==========
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // ========== 烟花效果 ==========
+        function triggerFirework(event) {
+            if (!event) event = { clientX: window.innerWidth / 2, clientY: window.innerHeight / 3 };
+            const x = event.clientX || (event.touches && event.touches[0].clientX) || window.innerWidth / 2;
+            const y = event.clientY || (event.touches && event.touches[0].clientY) || window.innerHeight / 3;
+
+            const container = document.createElement('div');
+            container.className = 'firework';
+            container.style.left = x + 'px';
+            container.style.top = y + 'px';
+            document.body.appendChild(container);
+
+            const colors = ['#FF6B8A', '#FFD700', '#FF85A2', '#FFB6C1', '#FF69B4', '#FFA07A', '#FF4500', '#FFD700', '#FF1493'];
+
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework-particle';
+                const angle = (Math.PI * 2 * i) / 30;
+                const distance = 50 + Math.random() * 80;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                particle.style.cssText = `
+                    background: ${color};
+                    --tx: ${tx}px;
+                    --ty: ${ty}px;
+                `;
+                container.appendChild(particle);
+            }
+
+            setTimeout(() => container.remove(), 1200);
+        }
+
+        // ========== 回到顶部 ==========
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 500) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        });
+
+        // ========== 平滑滚动 ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ========== 滚动动画观察器 ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.style.animationPlayState = 'paused';
+            observer.observe(item);
+        });
+
+        // ========== 媒体查看器（点开查看大图/视频） ==========
+        function showMediaViewer(src, type, caption) {
+            const viewer = document.getElementById('mediaViewer');
+            const content = document.getElementById('mediaViewerContent');
+            let html = '';
+            if (type === 'image') {
+                html += `<img src="${src}" alt="大图查看">`;
+            } else {
+                html += `<video src="${src}" controls autoplay></video>`;
+            }
+            if (caption && caption.trim()) {
+                html += `<div class="media-viewer-caption">${caption.trim()}</div>`;
+            }
+            content.innerHTML = html;
+            viewer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMediaViewer() {
+            const viewer = document.getElementById('mediaViewer');
+            viewer.classList.remove('active');
+            const content = document.getElementById('mediaViewerContent');
+            content.innerHTML = '';
+            document.body.style.overflow = '';
+        }
+
+        // ESC 键关闭媒体查看器
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMediaViewer();
+        });
+    </script>
+</body>
+</html>
