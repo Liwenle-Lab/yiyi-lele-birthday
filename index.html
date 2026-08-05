@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -2157,6 +2158,41 @@
         .pm-close-btn {
             margin-top: 4px;
         }
+        .pm-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--pink-soft), transparent);
+            margin: 4px 0;
+        }
+        .pm-data-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        .pm-data-btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid var(--pink-soft);
+            border-radius: 12px;
+            background: white;
+            color: var(--pink-dark);
+            font-size: 13px;
+            font-family: 'Noto Sans SC', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .pm-data-btn:hover {
+            background: var(--pink-soft);
+            border-color: var(--pink-medium);
+        }
+        .pm-data-btn input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
 
         /* ========== 确认弹窗 ========== */
         .confirm-modal {
@@ -2843,6 +2879,20 @@
                 <button class="pm-link" onclick="resetYiyiPassword()" style="color:#e74c3c;">🗑 重置密码（清除已设密码）</button>
             </div>
 
+            <!-- 数据导出/导入 -->
+            <div class="pm-divider"></div>
+            <div class="pm-section">
+                <div class="pm-label">📦 数据备份</div>
+                <div class="pm-hint">导出所有照片、愿望、文字到文件，或从文件恢复</div>
+                <div class="pm-data-row">
+                    <button class="pm-data-btn" onclick="exportAllData()">📤 导出数据</button>
+                    <label class="pm-data-btn">
+                        📥 导入数据
+                        <input type="file" accept=".json" onchange="importAllData(event)">
+                    </label>
+                </div>
+            </div>
+
             <div class="pm-status" id="pmManageStatus"></div>
             <button class="btn-cancel pm-close-btn" onclick="closePwdManage()">关闭</button>
         </div>
@@ -2955,6 +3005,89 @@
                 timelineItems = data.timelineItems || {};
                 timelineCaptions = data.timelineCaptions || {};
             } catch(e) { console.warn('页面数据加载失败', e); }
+        }
+
+        // ========== 数据导出/导入 ==========
+        function exportAllData() {
+            try {
+                const data = {
+                    version: 1,
+                    exportDate: getTodayDate(),
+                    pwdData: {
+                        yiyiPwd: passwords.YIYI,
+                        yiyiPasswordSet: yiyiPasswordSet,
+                        boundEmail: boundEmail,
+                        birthdayWishes: birthdayWishes
+                    },
+                    pageData: {
+                        customMessages: customMessages,
+                        uploadItems: uploadItems,
+                        timelineItems: timelineItems,
+                        timelineCaptions: timelineCaptions
+                    }
+                };
+                const jsonStr = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `yiyi_lele_birthday_backup_${new Date().toISOString().slice(0,10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('数据导出成功！📤');
+            } catch(e) {
+                console.warn('导出失败', e);
+                showToast('导出失败，请重试');
+            }
+        }
+
+        function importAllData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.pwdData || !data.pageData) {
+                        showToast('文件格式不正确，请确认是导出的备份文件');
+                        return;
+                    }
+                    showConfirm({
+                        icon: '📥',
+                        title: '确认导入数据？',
+                        desc: '导入将覆盖当前所有数据，此操作不可撤销',
+                        onConfirm: () => {
+                            // 恢复密码数据
+                            if (data.pwdData) {
+                                passwords.YIYI = data.pwdData.yiyiPwd || null;
+                                yiyiPasswordSet = data.pwdData.yiyiPasswordSet || false;
+                                boundEmail = data.pwdData.boundEmail || null;
+                                if (Array.isArray(data.pwdData.birthdayWishes)) {
+                                    birthdayWishes = data.pwdData.birthdayWishes;
+                                }
+                                savePwdData();
+                            }
+                            // 恢复页面数据
+                            if (data.pageData) {
+                                customMessages = Array.isArray(data.pageData.customMessages) ? data.pageData.customMessages : [];
+                                uploadItems = Array.isArray(data.pageData.uploadItems) ? data.pageData.uploadItems : [];
+                                timelineItems = data.pageData.timelineItems || {};
+                                timelineCaptions = data.pageData.timelineCaptions || {};
+                                savePageData();
+                            }
+                            showToast('数据导入成功！正在刷新... ✨');
+                            setTimeout(() => location.reload(), 1200);
+                        }
+                    });
+                } catch(err) {
+                    console.warn('导入失败', err);
+                    showToast('文件解析失败，请确认是有效的备份文件');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
         }
 
         // ========== 开场 ==========
