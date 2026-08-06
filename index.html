@@ -2478,6 +2478,8 @@
             padding-top: 4px;
         }
     </style>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -2910,6 +2912,12 @@
     </div>
 
     <script>
+        // ========== Supabase 配置 ==========
+        const SUPABASE_URL = 'https://mqxdnygibvrihcpjhccb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_fmnLASUk76ZL5gWgIGGYrQ_ILF2A-';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const STORAGE_BUCKET = 'photos';
+
         // ========== 全局数据 ==========
         const defaultMessages = [
             { text: '生日快乐，田佳骏！🎉', from: 'LELE', date: '2026.07.20' },
@@ -2946,65 +2954,380 @@
         let yiyiPasswordSet = false;
         let boundEmail = null; // 绑定的邮箱
         let birthdayWishes = [];
+        let customMessages = [];   // 用户添加的心里话 {text, from, date}
+        let uploadItems = [];      // 上传回忆 {id, src, type, caption, date}
+        let timelineItems = {};    // 幸福瞬间 {gal1: [{id,src,type,caption,date}], ...}
+        let timelineCaptions = {}; // 幸福瞬间文字 {cap1: text, ...}
         // 密码弹窗当前模式与上下文
         let pwdMode = null; // 'view-wish' | 'set-yiyi' | 'manage'
         let pwdContext = null;
         let confirmCallback = null;
 
-        // ========== 持久化存储 ==========
+        // ========== Supabase 数据持久化 ==========
+        // 从 settings 表读取单个设置
+        async function getSetting(key) {
+            try {
+                const { data, error } = await supabase
+                    .from('settings')
+                    .select('value')
+                    .eq('key', key)
+                    .single();
+                if (error) return null;
+                return data ? data.value : null;
+            } catch(e) { console.warn('读取设置失败', e); return null; }
+        }
+
+        // 写入 settings 表
+        async function setSetting(key, value) {
+            try {
+                const { error } = await supabase
+                    .from('settings')
+                    .upsert({ key, value }, { onConflict: 'key' });
+                if (error) console.warn('保存设置失败', error);
+            } catch(e) { console.warn('保存设置失败', e); }
+        }
+
+        // 保存密码相关数据
         function savePwdData() {
-            try {
-                localStorage.setItem('yiyi_birthday_data', JSON.stringify({
-                    yiyiPwd: passwords.YIYI,
-                    yiyiPasswordSet: yiyiPasswordSet,
-                    boundEmail: boundEmail,
-                    birthdayWishes: birthdayWishes
-                }));
-            } catch(e) { console.warn('保存失败', e); }
+            setSetting('yiyiPwd', passwords.YIYI || '');
+            setSetting('yiyiPasswordSet', yiyiPasswordSet ? '1' : '0');
+            setSetting('boundEmail', boundEmail || '');
+            setSetting('birthdayWishes', JSON.stringify(birthdayWishes));
         }
 
-        function loadPwdData() {
+        // 加载密码相关数据
+        async function loadPwdData() {
             try {
-                const raw = localStorage.getItem('yiyi_birthday_data');
-                if (!raw) return;
-                const data = JSON.parse(raw);
-                passwords.YIYI = data.yiyiPwd || null;
-                yiyiPasswordSet = data.yiyiPasswordSet || false;
-                boundEmail = data.boundEmail || null;
-                if (Array.isArray(data.birthdayWishes)) birthdayWishes = data.birthdayWishes;
-            } catch(e) { console.warn('加载失败', e); }
+                const { data, error } = await supabase
+                    .from('settings')
+                    .select('key, value')
+                    .in('key', ['yiyiPwd', 'yiyiPasswordSet', 'boundEmail', 'birthdayWishes']);
+                if (error) { console.warn('加载密码数据失败', error); return; }
+                const map = {};
+                data.forEach(row => map[row.key] = row.value);
+                passwords.YIYI = map.yiyiPwd || null;
+                yiyiPasswordSet = map.yiyiPasswordSet === '1';
+                boundEmail = map.boundEmail || null;
+                if (map.birthdayWishes) {
+                    try { birthdayWishes = JSON.parse(map.birthdayWishes); } catch(e) {}
+                }
+            } catch(e) { console.warn('加载密码数据失败', e); }
         }
 
-        // ========== 页面数据持久化（消息、上传、幸福瞬间） ==========
-        let customMessages = [];   // 用户添加的心里话 {text, from, date}
-        let uploadItems = [];      // 上传回忆 {src, type, caption, date}
-        let timelineItems = {};    // 幸福瞬间 {gal1: [{src,type,caption,date}], ...}
-        let timelineCaptions = {}; // 幸福瞬间文字 {cap1: text, ...}
-
+        // 保存页面数据（消息、上传、幸福瞬间 - 各存各的表，这里统一触发）
         function savePageData() {
-            try {
-                localStorage.setItem('yiyi_page_data', JSON.stringify({
-                    customMessages: customMessages,
-                    uploadItems: uploadItems,
-                    timelineItems: timelineItems,
-                    timelineCaptions: timelineCaptions
-                }));
-            } catch(e) {
-                console.warn('页面数据保存失败（可能存储空间不足）', e);
-                showToast('存储空间不足，部分内容可能无法保存');
-            }
+            // 这个函数保留为兼容接口，实际各模块单独保存
         }
 
-        function loadPageData() {
+        // ========== 消息（心里话）数据库操作 ==========
+        async function loadMessages() {
             try {
-                const raw = localStorage.getItem('yiyi_page_data');
-                if (!raw) return;
-                const data = JSON.parse(raw);
-                customMessages = Array.isArray(data.customMessages) ? data.customMessages : [];
-                uploadItems = Array.isArray(data.uploadItems) ? data.uploadItems : [];
-                timelineItems = data.timelineItems || {};
-                timelineCaptions = data.timelineCaptions || {};
-            } catch(e) { console.warn('页面数据加载失败', e); }
+                const { data, error } = await supabase
+                    .from('messages')
+                    .select('*')
+                    .order('created_at', { ascending: true });
+                if (error) { console.warn('加载消息失败', error); return; }
+                customMessages = data.map(row => ({
+                    text: row.text,
+                    from: row.from_name || 'LELE',
+                    date: formatDate(row.created_at)
+                }));
+            } catch(e) { console.warn('加载消息失败', e); }
+        }
+
+        async function addMessageToDb(text, fromName) {
+            try {
+                const { error } = await supabase
+                    .from('messages')
+                    .insert({ text, from_name: fromName });
+                if (error) console.warn('添加消息失败', error);
+            } catch(e) { console.warn('添加消息失败', e); }
+        }
+
+        // ========== 上传回忆数据库操作 ==========
+        async function loadUploadItems() {
+            try {
+                const { data, error } = await supabase
+                    .from('upload_items')
+                    .select('*')
+                    .order('created_at', { ascending: true });
+                if (error) { console.warn('加载上传回忆失败', error); return; }
+                uploadItems = data.map(row => ({
+                    id: row.id,
+                    src: row.src,
+                    type: row.type,
+                    caption: row.caption || '',
+                    date: formatDate(row.created_at)
+                }));
+            } catch(e) { console.warn('加载上传回忆失败', e); }
+        }
+
+        async function addUploadItemToDb(src, type, caption) {
+            try {
+                const { data, error } = await supabase
+                    .from('upload_items')
+                    .insert({ src, type, caption: caption || '' })
+                    .select();
+                if (error) { console.warn('添加上传回忆失败', error); return null; }
+                return data[0];
+            } catch(e) { console.warn('添加上传回忆失败', e); return null; }
+        }
+
+        async function deleteUploadItemFromDb(id) {
+            try {
+                const { error } = await supabase
+                    .from('upload_items')
+                    .delete()
+                    .eq('id', id);
+                if (error) console.warn('删除上传回忆失败', error);
+            } catch(e) { console.warn('删除上传回忆失败', e); }
+        }
+
+        async function updateUploadItemCaption(id, caption) {
+            try {
+                const { error } = await supabase
+                    .from('upload_items')
+                    .update({ caption })
+                    .eq('id', id);
+                if (error) console.warn('更新上传回忆文字失败', error);
+            } catch(e) { console.warn('更新上传回忆文字失败', e); }
+        }
+
+        // ========== 幸福瞬间数据库操作 ==========
+        async function loadTimelineItems() {
+            try {
+                const { data, error } = await supabase
+                    .from('timeline_items')
+                    .select('*')
+                    .order('created_at', { ascending: true });
+                if (error) { console.warn('加载幸福瞬间失败', error); return; }
+                timelineItems = {};
+                data.forEach(row => {
+                    const galId = row.gallery_id;
+                    if (!timelineItems[galId]) timelineItems[galId] = [];
+                    timelineItems[galId].push({
+                        id: row.id,
+                        src: row.src,
+                        type: row.type,
+                        caption: row.caption || '',
+                        date: formatDate(row.created_at)
+                    });
+                });
+            } catch(e) { console.warn('加载幸福瞬间失败', e); }
+        }
+
+        async function addTimelineItemToDb(galId, src, type, caption) {
+            try {
+                const { data, error } = await supabase
+                    .from('timeline_items')
+                    .insert({ gallery_id: galId, src, type, caption: caption || '' })
+                    .select();
+                if (error) { console.warn('添加幸福瞬间失败', error); return null; }
+                return data[0];
+            } catch(e) { console.warn('添加幸福瞬间失败', e); return null; }
+        }
+
+        async function deleteTimelineItemFromDb(id) {
+            try {
+                const { error } = await supabase
+                    .from('timeline_items')
+                    .delete()
+                    .eq('id', id);
+                if (error) console.warn('删除幸福瞬间失败', error);
+            } catch(e) { console.warn('删除幸福瞬间失败', e); }
+        }
+
+        async function updateTimelineItemCaption(id, caption) {
+            try {
+                const { error } = await supabase
+                    .from('timeline_items')
+                    .update({ caption })
+                    .eq('id', id);
+                if (error) console.warn('更新幸福瞬间文字失败', error);
+            } catch(e) { console.warn('更新幸福瞬间文字失败', e); }
+        }
+
+        // 幸福瞬间文字说明
+        async function loadTimelineCaptions() {
+            try {
+                const { data, error } = await supabase
+                    .from('timeline_captions')
+                    .select('caption_id, content');
+                if (error) { console.warn('加载时光轴文字失败', error); return; }
+                timelineCaptions = {};
+                data.forEach(row => { timelineCaptions[row.caption_id] = row.content; });
+            } catch(e) { console.warn('加载时光轴文字失败', e); }
+        }
+
+        async function saveTimelineCaptionToDb(capId, content) {
+            try {
+                const { error } = await supabase
+                    .from('timeline_captions')
+                    .upsert({ caption_id: capId, content }, { onConflict: 'caption_id' });
+                if (error) console.warn('保存时光轴文字失败', error);
+            } catch(e) { console.warn('保存时光轴文字失败', e); }
+        }
+
+        // 辅助：格式化日期
+        function formatDate(isoStr) {
+            if (!isoStr) return '';
+            const d = new Date(isoStr);
+            const pad = n => String(n).padStart(2, '0');
+            return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+        }
+
+        // 统一加载所有数据
+        async function loadAllData() {
+            await Promise.all([
+                loadPwdData(),
+                loadMessages(),
+                loadUploadItems(),
+                loadTimelineItems(),
+                loadTimelineCaptions()
+            ]);
+        }
+
+        // ========== Supabase Realtime 实时订阅 ==========
+        let realtimeChannels = [];
+
+        // 初始化实时订阅
+        function initRealtime() {
+            // 消息表变更
+            supabase
+                .channel('realtime-messages')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, async (payload) => {
+                    if (payload.eventType === 'INSERT') {
+                        const msg = {
+                            text: payload.new.text,
+                            from: payload.new.from_name || 'LELE',
+                            date: formatDate(payload.new.created_at)
+                        };
+                        // 避免重复添加自己刚发的消息
+                        const exists = customMessages.some(m => m.text === msg.text && m.from === msg.from && m.date === msg.date);
+                        if (!exists) {
+                            customMessages.push(msg);
+                            if (window._mainStarted) createBarrageItem(msg.text, msg.from, msg.date);
+                            showToast('💬 收到新的心里话！');
+                        }
+                    } else if (payload.eventType === 'DELETE') {
+                        await loadMessages();
+                        if (window._mainStarted) restoreBarrage();
+                    }
+                })
+                .subscribe();
+
+            // 上传回忆表变更
+            supabase
+                .channel('realtime-uploads')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'upload_items' }, async (payload) => {
+                    if (payload.eventType === 'INSERT') {
+                        const item = {
+                            id: payload.new.id,
+                            src: payload.new.src,
+                            type: payload.new.type,
+                            caption: payload.new.caption || '',
+                            date: formatDate(payload.new.created_at)
+                        };
+                        const exists = uploadItems.some(m => m.id === item.id);
+                        if (!exists) {
+                            uploadItems.push(item);
+                            if (window._mainStarted) renderUploadCard(item, uploadItems.length - 1);
+                            updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
+                            showToast('🎬 收到新的回忆！');
+                        }
+                    } else if (payload.eventType === 'DELETE') {
+                        await loadUploadItems();
+                        if (window._mainStarted) {
+                            const area = document.getElementById('uploadDisplayArea');
+                            if (area) area.innerHTML = '';
+                            uploadItems.forEach((item, idx) => renderUploadCard(item, idx));
+                            updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
+                        }
+                    } else if (payload.eventType === 'UPDATE') {
+                        const idx = uploadItems.findIndex(m => m.id === payload.new.id);
+                        if (idx >= 0) {
+                            uploadItems[idx].caption = payload.new.caption || '';
+                        }
+                    }
+                })
+                .subscribe();
+
+            // 幸福瞬间表变更
+            supabase
+                .channel('realtime-timeline')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'timeline_items' }, async (payload) => {
+                    if (payload.eventType === 'INSERT') {
+                        const galId = payload.new.gallery_id;
+                        const item = {
+                            id: payload.new.id,
+                            src: payload.new.src,
+                            type: payload.new.type,
+                            caption: payload.new.caption || '',
+                            date: formatDate(payload.new.created_at)
+                        };
+                        if (!timelineItems[galId]) timelineItems[galId] = [];
+                        const exists = timelineItems[galId].some(m => m.id === item.id);
+                        if (!exists) {
+                            timelineItems[galId].push(item);
+                            if (window._mainStarted) renderTimelineItem(galId, item, timelineItems[galId].length - 1);
+                            updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
+                            showToast('📸 收到新的幸福瞬间！');
+                        }
+                    } else if (payload.eventType === 'DELETE') {
+                        await loadTimelineItems();
+                        if (window._mainStarted) {
+                            for (const galId in timelineItems) {
+                                const gallery = document.getElementById(galId);
+                                if (gallery) gallery.innerHTML = '';
+                                timelineItems[galId].forEach((item, idx) => renderTimelineItem(galId, item, idx));
+                                updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
+                            }
+                        }
+                    } else if (payload.eventType === 'UPDATE') {
+                        for (const galId in timelineItems) {
+                            const idx = timelineItems[galId].findIndex(m => m.id === payload.new.id);
+                            if (idx >= 0) {
+                                timelineItems[galId][idx].caption = payload.new.caption || '';
+                                break;
+                            }
+                        }
+                    }
+                })
+                .subscribe();
+
+            // 幸福瞬间文字变更
+            supabase
+                .channel('realtime-captions')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'timeline_captions' }, (payload) => {
+                    if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
+                        const capId = payload.new.caption_id;
+                        timelineCaptions[capId] = payload.new.content;
+                        const el = document.getElementById(capId);
+                        if (el && document.activeElement !== el) el.value = payload.new.content;
+                    }
+                })
+                .subscribe();
+
+            // 设置（密码、愿望）变更
+            supabase
+                .channel('realtime-settings')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, async (payload) => {
+                    if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
+                        const key = payload.new.key;
+                        const value = payload.new.value;
+                        if (key === 'yiyiPwd') passwords.YIYI = value || null;
+                        else if (key === 'yiyiPasswordSet') yiyiPasswordSet = value === '1';
+                        else if (key === 'boundEmail') boundEmail = value || null;
+                        else if (key === 'birthdayWishes') {
+                            try {
+                                birthdayWishes = JSON.parse(value);
+                                if (window._mainStarted) renderHeroWishes();
+                                showToast('🌟 愿望已更新！');
+                            } catch(e) {}
+                        }
+                    }
+                })
+                .subscribe();
         }
 
         // ========== 数据导出/导入 ==========
@@ -3057,8 +3380,8 @@
                     showConfirm({
                         icon: '📥',
                         title: '确认导入数据？',
-                        desc: '导入将覆盖当前所有数据，此操作不可撤销',
-                        onConfirm: () => {
+                        desc: '导入将合并到当前数据中，文字内容会追加',
+                        onConfirm: async () => {
                             // 恢复密码数据
                             if (data.pwdData) {
                                 passwords.YIYI = data.pwdData.yiyiPwd || null;
@@ -3069,16 +3392,24 @@
                                 }
                                 savePwdData();
                             }
-                            // 恢复页面数据
+                            // 恢复页面文字数据（消息、文字说明）
                             if (data.pageData) {
-                                customMessages = Array.isArray(data.pageData.customMessages) ? data.pageData.customMessages : [];
-                                uploadItems = Array.isArray(data.pageData.uploadItems) ? data.pageData.uploadItems : [];
-                                timelineItems = data.pageData.timelineItems || {};
-                                timelineCaptions = data.pageData.timelineCaptions || {};
-                                savePageData();
+                                // 导入消息
+                                if (Array.isArray(data.pageData.customMessages)) {
+                                    for (const msg of data.pageData.customMessages) {
+                                        await addMessageToDb(msg.text, msg.from || 'LELE');
+                                    }
+                                }
+                                // 导入时光轴文字
+                                if (data.pageData.timelineCaptions) {
+                                    for (const capId in data.pageData.timelineCaptions) {
+                                        await saveTimelineCaptionToDb(capId, data.pageData.timelineCaptions[capId]);
+                                    }
+                                }
+                                // 图片/视频需要重新上传（base64无法直接导入到Storage）
+                                showToast('文字数据导入成功！照片/视频请重新上传 📸');
                             }
-                            showToast('数据导入成功！正在刷新... ✨');
-                            setTimeout(() => location.reload(), 1200);
+                            setTimeout(() => location.reload(), 1500);
                         }
                     });
                 } catch(err) {
@@ -3609,10 +3940,25 @@
             }
         }
 
-        // 密码输入回车确认
-        document.addEventListener('DOMContentLoaded', () => {
-            loadPwdData();
-            loadPageData();
+        // 页面加载时从数据库读取所有数据
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadAllData();
+            // 初始化实时订阅
+            initRealtime();
+            // 数据加载完成后刷新各区域显示
+            if (window._mainStarted) {
+                renderHeroWishes();
+                restoreBarrage();
+                restoreUploads();
+                restoreTimeline();
+                updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
+                for (let i = 1; i <= 4; i++) {
+                    const galId = 'gal' + i;
+                    if (timelineItems[galId]) {
+                        updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
+                    }
+                }
+            }
             document.getElementById('pwdInput').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') confirmPwd();
             });
@@ -3727,6 +4073,15 @@
             setTimeout(() => { stage.scrollTop = 0; }, defaultMessages.length * 80 + 200);
         }
 
+        // 重新渲染所有消息（数据加载完成后调用）
+        function restoreBarrage() {
+            const list = document.getElementById('barrageList');
+            if (!list) return;
+            list.innerHTML = '';
+            defaultMessages.forEach(msg => createBarrageItem(msg.text, msg.from, msg.date));
+            customMessages.forEach(msg => createBarrageItem(msg.text, msg.from, msg.date));
+        }
+
         function createBarrageItem(text, from, date) {
             const list = document.getElementById('barrageList');
             if (!list) return;
@@ -3766,7 +4121,7 @@
             const date = getTodayDate();
             createBarrageItem(text, from, date);
             customMessages.push({ text, from, date });
-            savePageData();
+            addMessageToDb(text, from);
             input.value = '';
             showToast('发送成功！你的心意已留下 💕');
             triggerFirework(event);
@@ -3835,26 +4190,49 @@
         function handleUpload(event) {
             const files = Array.from(event.target.files || []);
             if (files.length === 0) return;
-            const date = getTodayDate();
             let added = 0;
 
-            files.forEach(file => {
+            files.forEach(async file => {
                 if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return;
                 added++;
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const src = e.target.result;
-                    const type = file.type.startsWith('image/') ? 'image' : 'video';
-                    const item = { src, type, caption: '', date };
-                    uploadItems.push(item);
-                    renderUploadCard(item, uploadItems.length - 1);
-                    savePageData();
-                    updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
-                };
-                reader.readAsDataURL(file);
+                const type = file.type.startsWith('image/') ? 'image' : 'video';
+                const fileExt = file.name.split('.').pop() || (type === 'image' ? 'jpg' : 'mp4');
+                const fileName = `upload_${Date.now()}_${Math.random().toString(36).substr(2, 6)}.${fileExt}`;
+
+                try {
+                    // 上传到 Supabase Storage
+                    const { error: uploadError } = await supabase.storage
+                        .from(STORAGE_BUCKET)
+                        .upload(fileName, file, { contentType: file.type });
+                    if (uploadError) throw uploadError;
+
+                    // 获取公开 URL
+                    const { data: urlData } = supabase.storage
+                        .from(STORAGE_BUCKET)
+                        .getPublicUrl(fileName);
+                    const src = urlData.publicUrl;
+
+                    // 写入数据库
+                    const dbItem = await addUploadItemToDb(src, type, '');
+                    if (dbItem) {
+                        const item = {
+                            id: dbItem.id,
+                            src,
+                            type,
+                            caption: '',
+                            date: formatDate(dbItem.created_at)
+                        };
+                        uploadItems.push(item);
+                        renderUploadCard(item, uploadItems.length - 1);
+                        updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
+                    }
+                } catch(e) {
+                    console.warn('上传失败', e);
+                    showToast('上传失败，请重试');
+                }
             });
 
-            showToast(`已添加 ${added} 个回忆！🎬`);
+            showToast(`正在上传 ${added} 个回忆... 🎬`);
             event.target.value = '';
         }
 
@@ -3886,10 +4264,16 @@
                     icon: '🗑️',
                     title: '删除这个回忆？',
                     desc: '删除后无法恢复',
-                    onConfirm: () => {
+                    onConfirm: async () => {
+                        // 从数据库和存储中删除
+                        if (item.id) {
+                            deleteUploadItemFromDb(item.id);
+                            // 从 storage 删除文件（不阻塞）
+                            const fileName = item.src.split('/').pop();
+                            supabase.storage.from(STORAGE_BUCKET).remove([fileName]).catch(()=>{});
+                        }
                         uploadItems.splice(idx, 1);
                         card.remove();
-                        savePageData();
                         updateToggleText('toggle_upload', uploadItems.length, '已上传回忆');
                     }
                 });
@@ -3905,7 +4289,7 @@
             caption.onclick = (ev) => ev.stopPropagation();
             caption.onchange = () => {
                 uploadItems[idx].caption = caption.value;
-                savePageData();
+                if (item.id) updateUploadItemCaption(item.id, caption.value);
             };
             card.appendChild(caption);
 
@@ -3931,27 +4315,50 @@
         function handleTimelineUpload(event, galId) {
             const files = Array.from(event.target.files || []);
             if (files.length === 0) return;
-            const date = getTodayDate();
             if (!timelineItems[galId]) timelineItems[galId] = [];
             let added = 0;
 
-            files.forEach(file => {
+            files.forEach(async file => {
                 if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return;
                 added++;
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const src = e.target.result;
-                    const type = file.type.startsWith('image/') ? 'image' : 'video';
-                    const item = { src, type, caption: '', date };
-                    timelineItems[galId].push(item);
-                    renderTimelineItem(galId, item, timelineItems[galId].length - 1);
-                    savePageData();
-                    updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
-                };
-                reader.readAsDataURL(file);
+                const type = file.type.startsWith('image/') ? 'image' : 'video';
+                const fileExt = file.name.split('.').pop() || (type === 'image' ? 'jpg' : 'mp4');
+                const fileName = `${galId}_${Date.now()}_${Math.random().toString(36).substr(2, 6)}.${fileExt}`;
+
+                try {
+                    // 上传到 Supabase Storage
+                    const { error: uploadError } = await supabase.storage
+                        .from(STORAGE_BUCKET)
+                        .upload(fileName, file, { contentType: file.type });
+                    if (uploadError) throw uploadError;
+
+                    // 获取公开 URL
+                    const { data: urlData } = supabase.storage
+                        .from(STORAGE_BUCKET)
+                        .getPublicUrl(fileName);
+                    const src = urlData.publicUrl;
+
+                    // 写入数据库
+                    const dbItem = await addTimelineItemToDb(galId, src, type, '');
+                    if (dbItem) {
+                        const item = {
+                            id: dbItem.id,
+                            src,
+                            type,
+                            caption: '',
+                            date: formatDate(dbItem.created_at)
+                        };
+                        timelineItems[galId].push(item);
+                        renderTimelineItem(galId, item, timelineItems[galId].length - 1);
+                        updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
+                    }
+                } catch(e) {
+                    console.warn('上传失败', e);
+                    showToast('上传失败，请重试');
+                }
             });
 
-            showToast(`已添加 ${added} 张照片到时光轴！📸`);
+            showToast(`正在上传 ${added} 张照片... 📸`);
             event.target.value = '';
         }
 
@@ -3984,10 +4391,14 @@
                     icon: '🗑️',
                     title: '删除这张照片？',
                     desc: '删除后无法恢复',
-                    onConfirm: () => {
+                    onConfirm: async () => {
+                        if (item.id) {
+                            deleteTimelineItemFromDb(item.id);
+                            const fileName = item.src.split('/').pop();
+                            supabase.storage.from(STORAGE_BUCKET).remove([fileName]).catch(()=>{});
+                        }
                         timelineItems[galId].splice(idx, 1);
                         el.remove();
-                        savePageData();
                         updateToggleText('toggle_' + galId, timelineItems[galId].length, '照片');
                     }
                 });
@@ -4009,7 +4420,7 @@
             caption.onclick = (ev) => ev.stopPropagation();
             caption.onchange = () => {
                 timelineItems[galId][idx].caption = caption.value;
-                savePageData();
+                if (item.id) updateTimelineItemCaption(item.id, caption.value);
             };
             el.appendChild(caption);
 
@@ -4033,7 +4444,7 @@
 
         function saveTimelineCaption(el, capId) {
             timelineCaptions[capId] = el.value;
-            savePageData();
+            saveTimelineCaptionToDb(capId, el.value);
             showToast('文字已保存 ✍️');
         }
 
