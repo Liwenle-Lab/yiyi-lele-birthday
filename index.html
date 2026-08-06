@@ -3315,9 +3315,15 @@
                     if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
                         const key = payload.new.key;
                         const value = payload.new.value;
-                        if (key === 'yiyiPwd') passwords.YIYI = value || null;
+                        if (key === 'yiyiPwd') {
+                            passwords.YIYI = value || null;
+                            showToast('🔑 密码已同步！');
+                        }
                         else if (key === 'yiyiPasswordSet') yiyiPasswordSet = value === '1';
-                        else if (key === 'boundEmail') boundEmail = value || null;
+                        else if (key === 'boundEmail') {
+                            boundEmail = value || null;
+                            showToast('📧 邮箱已同步！');
+                        }
                         else if (key === 'birthdayWishes') {
                             try {
                                 birthdayWishes = JSON.parse(value);
