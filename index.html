@@ -2915,7 +2915,7 @@
         // ========== Supabase 配置 ==========
         const SUPABASE_URL = 'https://mqxdnygibvrihcpjhccb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_fmnLASUk76ZL5gWgIGGYrQ_ILF2A-';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const STORAGE_BUCKET = 'photos';
 
         // ========== 全局数据 ==========
@@ -2967,7 +2967,7 @@
         // 从 settings 表读取单个设置
         async function getSetting(key) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('settings')
                     .select('value')
                     .eq('key', key)
@@ -2980,7 +2980,7 @@
         // 写入 settings 表
         async function setSetting(key, value) {
             try {
-                const { error } = await supabase
+                const { error } = await sbClient
                     .from('settings')
                     .upsert({ key, value }, { onConflict: 'key' });
                 if (error) console.warn('保存设置失败', error);
@@ -2998,7 +2998,7 @@
         // 加载密码相关数据
         async function loadPwdData() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('settings')
                     .select('key, value')
                     .in('key', ['yiyiPwd', 'yiyiPasswordSet', 'boundEmail', 'birthdayWishes']);
@@ -3022,7 +3022,7 @@
         // ========== 消息（心里话）数据库操作 ==========
         async function loadMessages() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('messages')
                     .select('*')
                     .order('created_at', { ascending: true });
@@ -3037,7 +3037,7 @@
 
         async function addMessageToDb(text, fromName) {
             try {
-                const { error } = await supabase
+                const { error } = await sbClient
                     .from('messages')
                     .insert({ text, from_name: fromName });
                 if (error) console.warn('添加消息失败', error);
@@ -3047,7 +3047,7 @@
         // ========== 上传回忆数据库操作 ==========
         async function loadUploadItems() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('upload_items')
                     .select('*')
                     .order('created_at', { ascending: true });
@@ -3064,7 +3064,7 @@
 
         async function addUploadItemToDb(src, type, caption) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('upload_items')
                     .insert({ src, type, caption: caption || '' })
                     .select();
@@ -3075,7 +3075,7 @@
 
         async function deleteUploadItemFromDb(id) {
             try {
-                const { error } = await supabase
+                const { error } = await sbClient
                     .from('upload_items')
                     .delete()
                     .eq('id', id);
@@ -3085,7 +3085,7 @@
 
         async function updateUploadItemCaption(id, caption) {
             try {
-                const { error } = await supabase
+                const { error } = await sbClient
                     .from('upload_items')
                     .update({ caption })
                     .eq('id', id);
@@ -3096,7 +3096,7 @@
         // ========== 幸福瞬间数据库操作 ==========
         async function loadTimelineItems() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('timeline_items')
                     .select('*')
                     .order('created_at', { ascending: true });
@@ -3118,7 +3118,7 @@
 
         async function addTimelineItemToDb(galId, src, type, caption) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('timeline_items')
                     .insert({ gallery_id: galId, src, type, caption: caption || '' })
                     .select();
@@ -3129,7 +3129,7 @@
 
         async function deleteTimelineItemFromDb(id) {
             try {
-                const { error } = await supabase
+                const { error } = await sbClient
                     .from('timeline_items')
                     .delete()
                     .eq('id', id);
@@ -3139,7 +3139,7 @@
 
         async function updateTimelineItemCaption(id, caption) {
             try {
-                const { error } = await supabase
+                const { error } = await sbClient
                     .from('timeline_items')
                     .update({ caption })
                     .eq('id', id);
@@ -3150,7 +3150,7 @@
         // 幸福瞬间文字说明
         async function loadTimelineCaptions() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sbClient
                     .from('timeline_captions')
                     .select('caption_id, content');
                 if (error) { console.warn('加载时光轴文字失败', error); return; }
@@ -3161,7 +3161,7 @@
 
         async function saveTimelineCaptionToDb(capId, content) {
             try {
-                const { error } = await supabase
+                const { error } = await sbClient
                     .from('timeline_captions')
                     .upsert({ caption_id: capId, content }, { onConflict: 'caption_id' });
                 if (error) console.warn('保存时光轴文字失败', error);
@@ -3193,7 +3193,7 @@
         // 初始化实时订阅
         function initRealtime() {
             // 消息表变更
-            supabase
+            sbClient
                 .channel('realtime-messages')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, async (payload) => {
                     if (payload.eventType === 'INSERT') {
@@ -3217,7 +3217,7 @@
                 .subscribe();
 
             // 上传回忆表变更
-            supabase
+            sbClient
                 .channel('realtime-uploads')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'upload_items' }, async (payload) => {
                     if (payload.eventType === 'INSERT') {
@@ -3253,7 +3253,7 @@
                 .subscribe();
 
             // 幸福瞬间表变更
-            supabase
+            sbClient
                 .channel('realtime-timeline')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'timeline_items' }, async (payload) => {
                     if (payload.eventType === 'INSERT') {
@@ -3296,7 +3296,7 @@
                 .subscribe();
 
             // 幸福瞬间文字变更
-            supabase
+            sbClient
                 .channel('realtime-captions')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'timeline_captions' }, (payload) => {
                     if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
@@ -3309,7 +3309,7 @@
                 .subscribe();
 
             // 设置（密码、愿望）变更
-            supabase
+            sbClient
                 .channel('realtime-settings')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, async (payload) => {
                     if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
@@ -4201,13 +4201,13 @@
 
                 try {
                     // 上传到 Supabase Storage
-                    const { error: uploadError } = await supabase.storage
+                    const { error: uploadError } = await sbClient.storage
                         .from(STORAGE_BUCKET)
                         .upload(fileName, file, { contentType: file.type });
                     if (uploadError) throw uploadError;
 
                     // 获取公开 URL
-                    const { data: urlData } = supabase.storage
+                    const { data: urlData } = sbClient.storage
                         .from(STORAGE_BUCKET)
                         .getPublicUrl(fileName);
                     const src = urlData.publicUrl;
@@ -4270,7 +4270,7 @@
                             deleteUploadItemFromDb(item.id);
                             // 从 storage 删除文件（不阻塞）
                             const fileName = item.src.split('/').pop();
-                            supabase.storage.from(STORAGE_BUCKET).remove([fileName]).catch(()=>{});
+                            sbClient.storage.from(STORAGE_BUCKET).remove([fileName]).catch(()=>{});
                         }
                         uploadItems.splice(idx, 1);
                         card.remove();
@@ -4327,13 +4327,13 @@
 
                 try {
                     // 上传到 Supabase Storage
-                    const { error: uploadError } = await supabase.storage
+                    const { error: uploadError } = await sbClient.storage
                         .from(STORAGE_BUCKET)
                         .upload(fileName, file, { contentType: file.type });
                     if (uploadError) throw uploadError;
 
                     // 获取公开 URL
-                    const { data: urlData } = supabase.storage
+                    const { data: urlData } = sbClient.storage
                         .from(STORAGE_BUCKET)
                         .getPublicUrl(fileName);
                     const src = urlData.publicUrl;
@@ -4395,7 +4395,7 @@
                         if (item.id) {
                             deleteTimelineItemFromDb(item.id);
                             const fileName = item.src.split('/').pop();
-                            supabase.storage.from(STORAGE_BUCKET).remove([fileName]).catch(()=>{});
+                            sbClient.storage.from(STORAGE_BUCKET).remove([fileName]).catch(()=>{});
                         }
                         timelineItems[galId].splice(idx, 1);
                         el.remove();
